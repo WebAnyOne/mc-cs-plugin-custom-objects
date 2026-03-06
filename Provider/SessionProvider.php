@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MauticPlugin\CustomObjectsBundle\Provider;
 
-use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class SessionProvider
 {
@@ -33,7 +33,7 @@ class SessionProvider
      */
     private const KEY_FILTER = 'filter';
 
-    public function __construct(private Session $session, private string $namespace, private int $defaultPageLimit)
+    public function __construct(private SessionInterface $session, private string $namespace, private int $defaultPageLimit)
     {
     }
 
