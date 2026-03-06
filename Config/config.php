@@ -543,7 +543,7 @@ $coParams = [
             'custom_object.session.provider_factory' => [
                 'class'     => MauticPlugin\CustomObjectsBundle\Provider\SessionProviderFactory::class,
                 'arguments' => [
-                    'session',
+                    'request_stack',
                     'mautic.helper.core_parameters',
                 ],
             ],
