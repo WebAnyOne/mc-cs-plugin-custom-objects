@@ -67,7 +67,6 @@ class SaveControllerTest extends ControllerTestCase
 
         $this->saveController             = new SaveController(
             $this->managerRegistry,
-            $this->mauticFactory,
             $this->modelFactory,
             $this->userHelper,
             $this->coreParametersHelper,

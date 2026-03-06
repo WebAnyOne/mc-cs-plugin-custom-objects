@@ -45,7 +45,6 @@ class ListControllerTest extends ControllerTestCase
         $this->request                = $this->createMock(Request::class);
         $this->listController         = new ListController(
             $this->managerRegistry,
-            $this->mauticFactory,
             $this->modelFactory,
             $this->userHelper,
             $this->coreParametersHelper,

@@ -55,7 +55,6 @@ class DeleteControllerTest extends ControllerTestCase
 
         $this->deleteController       = new DeleteController(
             $this->managerRegistry,
-            $this->mauticFactory,
             $this->modelFactory,
             $this->userHelper,
             $this->coreParametersHelper,

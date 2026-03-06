@@ -53,7 +53,6 @@ class ListControllerTest extends ControllerTestCase
 
         $this->listController         = new ListController(
             $this->managerRegistry,
-            $this->mauticFactory,
             $this->modelFactory,
             $this->userHelper,
             $this->coreParametersHelper,
