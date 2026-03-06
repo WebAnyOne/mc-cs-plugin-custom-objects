@@ -341,7 +341,6 @@ class FormControllerTest extends AbstractFieldControllerTest
 
         $this->formController = new FormController(
             $this->managerRegistry,
-            $this->mauticFactory,
             $this->modelFactory,
             $this->userHelper,
             $this->coreParametersHelper,

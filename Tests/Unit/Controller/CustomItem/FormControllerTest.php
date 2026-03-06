@@ -110,7 +110,6 @@ class FormControllerTest extends ControllerTestCase
 
         $this->formController = new FormController(
             $this->managerRegistry,
-            $this->mauticFactory,
             $this->modelFactory,
             $this->userHelper,
             $this->coreParametersHelper,

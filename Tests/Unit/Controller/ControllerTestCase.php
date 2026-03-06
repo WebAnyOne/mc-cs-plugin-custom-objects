@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace MauticPlugin\CustomObjectsBundle\Tests\Unit\Controller;
 
 use Doctrine\Persistence\ManagerRegistry;
-use Mautic\CoreBundle\Factory\MauticFactory;
 use Mautic\CoreBundle\Factory\ModelFactory;
 use Mautic\CoreBundle\Helper\CoreParametersHelper;
 use Mautic\CoreBundle\Helper\UserHelper;
@@ -59,11 +58,6 @@ class ControllerTestCase extends \PHPUnit\Framework\TestCase
     protected $managerRegistry;
 
     /**
-     * @var MockObject|MauticFactory
-     */
-    protected $mauticFactory;
-
-    /**
      * @var MockObject|ModelFactory
      */
     protected $modelFactory;
@@ -107,7 +101,6 @@ class ControllerTestCase extends \PHPUnit\Framework\TestCase
         $this->container            = $this->createMock(ContainerInterface::class);
         $this->router               = $this->createMock(RouterInterface::class);
         $this->managerRegistry      = $this->createMock(ManagerRegistry::class);
-        $this->mauticFactory        = $this->createMock(MauticFactory::class);
         $this->modelFactory         = $this->createMock(ModelFactory::class);
         $this->coreParametersHelper = $this->createMock(CoreParametersHelper::class);
         $this->dispatcher           = $this->createMock(EventDispatcherInterface::class);

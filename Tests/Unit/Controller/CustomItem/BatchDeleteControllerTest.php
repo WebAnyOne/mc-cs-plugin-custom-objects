@@ -55,7 +55,6 @@ class BatchDeleteControllerTest extends ControllerTestCase
 
         $this->batchDeleteController  = new BatchDeleteController(
             $this->managerRegistry,
-            $this->mauticFactory,
             $this->modelFactory,
             $this->userHelper,
             $this->coreParametersHelper,

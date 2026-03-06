@@ -61,7 +61,6 @@ class ViewControllerTest extends ControllerTestCase
 
         $this->viewController             = new ViewController(
             $this->managerRegistry,
-            $this->mauticFactory,
             $this->modelFactory,
             $this->userHelper,
             $this->coreParametersHelper,
