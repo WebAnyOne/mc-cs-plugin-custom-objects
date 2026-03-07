@@ -55,7 +55,7 @@ class CustomItemRouteProvider
     {
     }
 
-    public function buildListRoute(int $objectId, int $page = 1, string $filterEntityType = null, int $filterEntityId = null, array $parameters = []): string
+    public function buildListRoute(int $objectId, int $page = 1, ?string $filterEntityType = null, ?int $filterEntityId = null, array $parameters = []): string
     {
         return $this->router->generate(static::ROUTE_LIST, array_merge([
             'objectId'         => $objectId,
@@ -91,7 +91,7 @@ class CustomItemRouteProvider
         return $this->router->generate(static::ROUTE_NEW_REDIRECT_TO_CONTACT, ['objectId' => $objectId, 'contactId' => $contactId]);
     }
 
-    public function buildSaveRoute(int $objectId, int $itemId = null): string
+    public function buildSaveRoute(int $objectId, ?int $itemId = null): string
     {
         return $this->router->generate(static::ROUTE_SAVE, ['objectId' => $objectId, 'itemId' => $itemId]);
     }
@@ -126,7 +126,7 @@ class CustomItemRouteProvider
         return $this->router->generate('mautic_contact_action', ['objectAction' => 'view', 'objectId' => $contactId]);
     }
 
-    public function buildLookupRoute(int $objectId, string $entityType = null, int $entityId = null): string
+    public function buildLookupRoute(int $objectId, ?string $entityType = null, ?int $entityId = null): string
     {
         return $this->router->generate(
             static::ROUTE_LOOKUP,

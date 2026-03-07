@@ -9,7 +9,7 @@ use Mautic\CoreBundle\Entity\CommonRepository;
 
 class CustomCommonRepository extends CommonRepository
 {
-    public function __construct(ManagerRegistry $registry, string $entityFQCN = null)
+    public function __construct(ManagerRegistry $registry, ?string $entityFQCN = null)
     {
         $entityFQCN = $entityFQCN
             ?? preg_replace('/(.*)\\\\Repository(.*)Repository?/', '$1\Entity$2', static::class);

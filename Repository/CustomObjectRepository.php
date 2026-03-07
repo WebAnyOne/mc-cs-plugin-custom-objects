@@ -31,7 +31,7 @@ class CustomObjectRepository extends CustomCommonRepository
      * Should only load custom objects with type = TYPE_MASTER, that are not the current
      * object being edited, and that do not already have a relationship associated.
      */
-    public function getMasterObjectChoices(CustomObject $customObject = null): array
+    public function getMasterObjectChoices(?CustomObject $customObject = null): array
     {
         $qb = $this->createQueryBuilder(CustomObject::TABLE_ALIAS);
         $qb->select('partial '.CustomObject::TABLE_ALIAS.'.{id,nameSingular}');

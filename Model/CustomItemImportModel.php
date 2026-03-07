@@ -44,7 +44,7 @@ class CustomItemImportModel extends FormModel
      *
      * @return bool updated = true, inserted = false
      */
-    public function import(Import $import, array $rowData, CustomObject $customObject, ImportLogDTO $importLogDto = null): bool
+    public function import(Import $import, array $rowData, CustomObject $customObject, ?ImportLogDTO $importLogDto = null): bool
     {
         $matchedFields = $import->getMatchedFields();
         $customItem    = $this->getCustomItem($import, $customObject, $rowData);
