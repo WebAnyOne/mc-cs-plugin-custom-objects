@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MauticPlugin\CustomObjectsBundle\Serializer;
 
-use ApiPlatform\Core\Api\IriConverterInterface;
-use ApiPlatform\Core\Exception\InvalidArgumentException;
-use Doctrine\Common\Collections\ArrayCollection;
+use ApiPlatform\Metadata\Exception\InvalidArgumentException;
+use ApiPlatform\Metadata\IriConverterInterface;
 use Doctrine\ORM\EntityManager;
 use MauticPlugin\CustomObjectsBundle\Entity\CustomField;
 use MauticPlugin\CustomObjectsBundle\Entity\CustomFieldOption;
@@ -20,15 +21,9 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 final class ApiNormalizer implements NormalizerInterface, DenormalizerInterface, SerializerAwareInterface
 {
-    /**
-     * @var NormalizerInterface
-     */
-    private $decorated;
+    private NormalizerInterface $decorated;
 
-    /**
-     * @var IriConverterInterface
-     */
-    private $iriConverter;
+    private IriConverterInterface $iriConverter;
 
     public function __construct(
         NormalizerInterface $decorated,
@@ -41,16 +36,19 @@ final class ApiNormalizer implements NormalizerInterface, DenormalizerInterface,
             throw new InvalidArgumentException(sprintf('The decorated normalizer must implement the %s.', DenormalizerInterface::class));
         }
 
-        $this->decorated               = $decorated;
-        $this->iriConverter            = $iriConverter;
+        $this->decorated    = $decorated;
+        $this->iriConverter = $iriConverter;
     }
 
-    public function supportsNormalization($data, $format = null)
+    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
-        return $this->decorated->supportsNormalization($data, $format);
+        return $this->decorated->supportsNormalization($data, $format, $context);
     }
 
-    public function normalize($object, $format = null, array $context = [])
+    /**
+     * @return array<string, mixed>|string|int|float|bool|\ArrayObject|null
+     */
+    public function normalize(mixed $object, ?string $format = null, array $context = []): array|string|int|float|bool|\ArrayObject|null
     {
         if ($object instanceof CustomItem) {
             return $this->normalizeCustomItem($object, $format, $context);
@@ -59,16 +57,16 @@ final class ApiNormalizer implements NormalizerInterface, DenormalizerInterface,
         return $this->decorated->normalize($object, $format, $context);
     }
 
-    public function supportsDenormalization($data, $type, $format = null)
+    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
     {
-        return $this->decorated->supportsDenormalization($data, $type, $format);
+        return $this->decorated->supportsDenormalization($data, $type, $format, $context);
     }
 
     /**
      * @throws InvalidArgumentException
      * @throws ExceptionInterface
      */
-    public function denormalize($data, $class, $format = null, array $context = [])
+    public function denormalize(mixed $data, string $class, ?string $format = null, array $context = []): mixed
     {
         if (CustomItem::class === $class) {
             return $this->denormalizeCustomItem($data, $class, $format, $context);
@@ -85,6 +83,14 @@ final class ApiNormalizer implements NormalizerInterface, DenormalizerInterface,
         return $this->decorated->denormalize($data, $class, $format, $context);
     }
 
+    /**
+     * @return array<string, string[]>
+     */
+    public function getSupportedTypes(?string $format): array
+    {
+        return [CustomItem::class => true, CustomField::class => true, CustomFieldOption::class => true];
+    }
+
     public function setSerializer(SerializerInterface $serializer): void
     {
         if ($this->decorated instanceof SerializerAwareInterface) {
@@ -92,15 +98,19 @@ final class ApiNormalizer implements NormalizerInterface, DenormalizerInterface,
         }
     }
 
-    private function normalizeCustomItem($object, $format = null, array $context = [])
+    /**
+     * @param array<string, mixed> $context
+     *
+     * @return array<string, mixed>|string|int|float|bool|\ArrayObject|null
+     */
+    private function normalizeCustomItem(CustomItem $object, ?string $format, array $context): array|string|int|float|bool|\ArrayObject|null
     {
         $objectCustomItem = $this->customItemModel->fetchEntity($object->getId());
-        // Get obejct from model
         $normalizedObject = $this->decorated->normalize($objectCustomItem, $format, $context);
-        // Change id to IRI
-        if (array_key_exists('fieldValues', $normalizedObject)) {
+        if (is_array($normalizedObject) && array_key_exists('fieldValues', $normalizedObject)) {
             foreach ($normalizedObject['fieldValues'] as &$values) {
-                $values['id'] = $this->iriConverter->getItemIriFromResourceClass(CustomField::class, [intval($values['id'])]);
+                $customField      = $this->em->find(CustomField::class, (int) $values['id']);
+                $values['id']     = $this->iriConverter->getIriFromResource($customField);
             }
         }
 
@@ -108,13 +118,16 @@ final class ApiNormalizer implements NormalizerInterface, DenormalizerInterface,
     }
 
     /**
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $context
+     *
      * @throws ExceptionInterface
      */
-    private function denormalizeCustomItem($data, $class, $format = null, array $context = [])
+    private function denormalizeCustomItem(array $data, string $class, ?string $format, array $context): mixed
     {
         if (array_key_exists('fieldValues', $data) && is_iterable($data['fieldValues'])) {
             foreach ($data['fieldValues'] as &$values) {
-                $values['id'] = $this->iriConverter->getItemFromIri($values['id'])->getId();
+                $values['id'] = $this->iriConverter->getResourceFromIri($values['id'])->getId();
             }
         }
 
@@ -122,14 +135,16 @@ final class ApiNormalizer implements NormalizerInterface, DenormalizerInterface,
     }
 
     /**
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $context
+     *
      * @throws ExceptionInterface
      * @throws InvalidArgumentException
      */
-    private function denormalizeCustomField($data, $class, $format = null, array $context = [])
+    private function denormalizeCustomField(array $data, string $class, ?string $format, array $context): mixed
     {
         $optionEntitiesCollection = null;
         $defaultValue             = null;
-        // Store and unset values that need TypeObject
         if (array_key_exists('options', $data) && is_array($data['options']) && count($data['options']) > 0) {
             $options = $data['options'];
             unset($data['options']);
@@ -137,7 +152,7 @@ final class ApiNormalizer implements NormalizerInterface, DenormalizerInterface,
             foreach ($options as $option) {
                 $optionEntities[] = $this->decorated->denormalize($option, CustomFieldOption::class, $format, $context);
             }
-            $optionEntitiesCollection = new ArrayCollection($optionEntities);
+            $optionEntitiesCollection = new \Doctrine\Common\Collections\ArrayCollection($optionEntities);
         } elseif (array_key_exists('options', $data) && is_array($data['options'])) {
             unset($data['options']);
         }
@@ -148,7 +163,6 @@ final class ApiNormalizer implements NormalizerInterface, DenormalizerInterface,
 
         $entity = $this->decorated->denormalize($data, $class, $format, $context);
 
-        // Set back the stored values when TypeObject is present
         try {
             if (array_key_exists('type', $data)) {
                 $type       = $data['type'];
@@ -166,7 +180,6 @@ final class ApiNormalizer implements NormalizerInterface, DenormalizerInterface,
         } catch (NotFoundException $e) {
             throw new InvalidArgumentException($e->getMessage());
         }
-        // Check if type exists (needed for validation)
         if (!$entity->getTypeObject()) {
             throw new InvalidArgumentException('Custom field type is missing.');
         }
@@ -175,10 +188,13 @@ final class ApiNormalizer implements NormalizerInterface, DenormalizerInterface,
     }
 
     /**
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $context
+     *
      * @throws ExceptionInterface
      * @throws InvalidArgumentException
      */
-    private function denormalizeCustomFieldOption($data, $class, $format = null, array $context = [])
+    private function denormalizeCustomFieldOption(array $data, string $class, ?string $format, array $context): mixed
     {
         $value = null;
         if (array_key_exists('value', $data)) {
@@ -187,7 +203,7 @@ final class ApiNormalizer implements NormalizerInterface, DenormalizerInterface,
         $customFieldId = null;
         if (array_key_exists('customField', $data)) {
             $customField       = $data['customField'];
-            $customFieldEntity = $this->iriConverter->getItemFromIri($customField);
+            $customFieldEntity = $this->iriConverter->getResourceFromIri($customField);
             if ($customFieldEntity instanceof CustomField) {
                 $customFieldId = $customFieldEntity->getId();
             }

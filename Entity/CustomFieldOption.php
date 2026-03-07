@@ -4,7 +4,13 @@ declare(strict_types=1);
 
 namespace MauticPlugin\CustomObjectsBundle\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Id;
@@ -15,21 +21,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-/**
- * @ApiResource(
- *     collectionOperations={
- *          "get"={"security"="'custom_objects:custom_fields:viewother'"},
- *          "post"={"security"="'custom_objects:custom_fields:create'"}
- *     },
- *     itemOperations={
- *          "get"={"security"="'custom_objects:custom_fields:view(getCustomField)'"},
- *          "put"={"security"="'custom_objects:custom_fields:edit(getCustomField)'"},
- *          "patch"={"security"="'custom_objects:custom_fields:edit(getCustomField)'"},
- *          "delete"={"security"="'custom_objects:custom_fields:delete(getCustomField)'"}
- *     },
- *     shortName="custom_field_options"
- * )
- */
+#[ApiResource(
+    shortName: 'custom_field_options',
+    operations: [
+        new GetCollection(security: "'custom_objects:custom_fields:viewother'"),
+        new Post(security: "'custom_objects:custom_fields:create'"),
+        new Get(security: "'custom_objects:custom_fields:view(getCustomField)'"),
+        new Put(security: "'custom_objects:custom_fields:edit(getCustomField)'"),
+        new Patch(security: "'custom_objects:custom_fields:edit(getCustomField)'"),
+        new Delete(security: "'custom_objects:custom_fields:delete(getCustomField)'"),
+    ],
+)]
 class CustomFieldOption implements \ArrayAccess
 {
     /**

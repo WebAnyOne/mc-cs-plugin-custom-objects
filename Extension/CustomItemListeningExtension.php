@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MauticPlugin\CustomObjectsBundle\Extension;
 
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
-use App\Entity\User;
+use ApiPlatform\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
+use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
+use ApiPlatform\Metadata\Operation;
 use Doctrine\ORM\QueryBuilder;
 use Mautic\CoreBundle\Helper\UserHelper;
 use Mautic\CoreBundle\Security\Exception\PermissionNotFoundException;
@@ -25,7 +27,8 @@ class CustomItemListeningExtension implements QueryCollectionExtensionInterface
         QueryBuilder $queryBuilder,
         QueryNameGeneratorInterface $queryNameGenerator,
         string $resourceClass,
-        ?string $operationName = null
+        ?Operation $operation = null,
+        array $context = []
     ): void {
         if (CustomItem::class !== $resourceClass) {
             return;

@@ -1,46 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MauticPlugin\CustomObjectsBundle\DataPersister;
 
-use ApiPlatform\Core\DataPersister\DataPersisterInterface;
+use ApiPlatform\Metadata\DeleteOperationInterface;
+use ApiPlatform\Metadata\Operation;
+use ApiPlatform\State\ProcessorInterface;
 use MauticPlugin\CustomObjectsBundle\Entity\CustomItem;
 use MauticPlugin\CustomObjectsBundle\Model\CustomItemModel;
 
-final class CustomItemDataPersister implements DataPersisterInterface
+final class CustomItemDataPersister implements ProcessorInterface
 {
     public function __construct(private CustomItemModel $customItemModel)
     {
     }
 
-    /**
-     * @param mixed $data
-     */
-    public function supports($data): bool
-    {
-        return $data instanceof CustomItem;
-    }
-
-    /**
-     * @param mixed $data
-     *
-     * @return mixed
-     */
-    public function persist($data)
+    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
     {
         \assert($data instanceof CustomItem);
+
+        if ($operation instanceof DeleteOperationInterface) {
+            $this->customItemModel->delete($data);
+
+            return null;
+        }
 
         $this->customItemModel->save($data);
 
         return $data;
-    }
-
-    /**
-     * @param mixed $data
-     */
-    public function remove($data): void
-    {
-        \assert($data instanceof CustomItem);
-
-        $this->customItemModel->delete($data);
     }
 }

@@ -638,7 +638,7 @@ $coParams = [
             ],
             'custom_object.data_persister.custom_item' => [
                 'class'     => MauticPlugin\CustomObjectsBundle\DataPersister\CustomItemDataPersister::class,
-                'tag'       => 'api_platform.data_persister',
+                'tag'       => 'api_platform.state_processor',
                 'arguments' => [
                     'mautic.custom.model.item',
                 ],
@@ -654,7 +654,7 @@ $coParams = [
     ],
 ];
 
-if (interface_exists('ApiPlatform\\Core\\Api\\IriConverterInterface')) {
+if (interface_exists('ApiPlatform\\Metadata\\IriConverterInterface')) {
     $coParams['services']['other']['api_platform.custom_object.serializer.api_normalizer_jsonld'] = [
         'class'            => MauticPlugin\CustomObjectsBundle\Serializer\ApiNormalizer::class,
         'decoratedService' => ['api_platform.jsonld.normalizer.item', 'api_platform.jsonld.normalizer.item.inner'],

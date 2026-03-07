@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace MauticPlugin\CustomObjectsBundle\Entity;
 
-use ApiPlatform\Core\Annotation\ApiProperty;
-use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Metadata\ApiProperty;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -23,22 +28,18 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-/**
- * @ApiResource(
- *     collectionOperations={
- *          "get"={"security"="'custom_objects:custom_objects:viewother'"},
- *          "post"={"security"="'custom_objects:custom_objects:create'"}
- *     },
- *     itemOperations={
- *          "get"={"security"="'custom_objects:custom_objects:view'"},
- *          "patch"={"security"="'custom_objects:custom_objects:edit'"},
- *          "delete"={"security"="'custom_objects:custom_objects:delete'"}
- *     },
- *     shortName="custom_objects",
- *     normalizationContext={"groups"={"custom_object:read"}, "swagger_definition_name"="Read"},
- *     denormalizationContext={"groups"={"custom_object:write"}, "swagger_definition_name"="Write"}
- * )
- */
+#[ApiResource(
+    shortName: 'custom_objects',
+    operations: [
+        new GetCollection(security: "'custom_objects:custom_objects:viewother'"),
+        new Post(security: "'custom_objects:custom_objects:create'"),
+        new Get(security: "'custom_objects:custom_objects:view'"),
+        new Patch(security: "'custom_objects:custom_objects:edit'"),
+        new Delete(security: "'custom_objects:custom_objects:delete'"),
+    ],
+    normalizationContext: ['groups' => ['custom_object:read'], 'swagger_definition_name' => 'Read'],
+    denormalizationContext: ['groups' => ['custom_object:write'], 'swagger_definition_name' => 'Write'],
+)]
 class CustomObject extends FormEntity implements UniqueEntityInterface
 {
     public const TABLE_NAME  = 'custom_object';
@@ -53,16 +54,8 @@ class CustomObject extends FormEntity implements UniqueEntityInterface
      *
      * @Groups({"custom_object:read"})
      *
-     * @ApiProperty(
-     *     attributes={
-     *         "openapi_context"={
-     *             "type"="int",
-     *             "nullable"=false,
-     *             "example"="42"
-     *         }
-     *     }
-     * )
      */
+    #[ApiProperty(openapiContext: ['type' => 'int', 'nullable' => false, 'example' => '42'])]
     private $id;
 
     /**
@@ -130,8 +123,8 @@ class CustomObject extends FormEntity implements UniqueEntityInterface
      *
      * @Groups({"custom_object:read", "custom_object:write"})
      *
-     * @ApiProperty(readableLink=false, writableLink=false)
      */
+    #[ApiProperty(readableLink: false, writableLink: false)]
     private $masterObject;
 
     /**
@@ -143,8 +136,8 @@ class CustomObject extends FormEntity implements UniqueEntityInterface
      *
      * @Groups({"custom_object:read", "custom_object:write"})
      *
-     * @ApiProperty(readableLink=false, writableLink=false)
      */
+    #[ApiProperty(readableLink: false, writableLink: false)]
     private $relationshipObject;
 
     /**

@@ -4,8 +4,14 @@ declare(strict_types=1);
 
 namespace MauticPlugin\CustomObjectsBundle\Entity;
 
-use ApiPlatform\Core\Annotation\ApiProperty;
-use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Metadata\ApiProperty;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -24,23 +30,19 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-/**
- * @ApiResource(
- *     collectionOperations={
- *          "get"={""},
- *          "post"={"security"="'custom_objects:[customObject]:create'"}
- *     },
- *     itemOperations={
- *          "get"={"security"="'custom_objects:[customObject]:view'"},
- *          "put"={"security"="'custom_objects:[customObject]:edit'"},
- *          "patch"={"security"="'custom_objects:[customObject]:edit'"},
- *          "delete"={"security"="'custom_objects:[customObject]:delete'"}
- *     },
- *     shortName="custom_items",
- *     normalizationContext={"groups"={"custom_item:read"}, "swagger_definition_name"="Read"},
- *     denormalizationContext={"groups"={"custom_item:write"}, "swagger_definition_name"="Write"}
- * )
- */
+#[ApiResource(
+    shortName: 'custom_items',
+    operations: [
+        new GetCollection(),
+        new Post(security: "'custom_objects:[customObject]:create'"),
+        new Get(security: "'custom_objects:[customObject]:view'"),
+        new Put(security: "'custom_objects:[customObject]:edit'"),
+        new Patch(security: "'custom_objects:[customObject]:edit'"),
+        new Delete(security: "'custom_objects:[customObject]:delete'"),
+    ],
+    normalizationContext: ['groups' => ['custom_item:read'], 'swagger_definition_name' => 'Read'],
+    denormalizationContext: ['groups' => ['custom_item:write'], 'swagger_definition_name' => 'Write'],
+)]
 #[\AllowDynamicProperties]
 class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInterface
 {
@@ -53,16 +55,8 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
      *
      * @Groups({"custom_item:read"})
      *
-     * @ApiProperty(
-     *     attributes={
-     *         "openapi_context"={
-     *             "type"="int",
-     *             "nullable"=false,
-     *             "example"="42"
-     *         }
-     *     }
-     * )
      */
+    #[ApiProperty(openapiContext: ['type' => 'int', 'nullable' => false, 'example' => '42'])]
     private $id;
 
     /**
@@ -70,17 +64,8 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
      *
      * @Groups({"custom_item:read", "custom_item:write"})
      *
-     * @ApiProperty(
-     *     attributes={
-     *         "openapi_context"={
-     *             "type"="string",
-     *             "maxLength"=191,
-     *             "nullable"=false,
-     *             "example"="city"
-     *         }
-     *     }
-     * )
      */
+    #[ApiProperty(openapiContext: ['type' => 'string', 'maxLength' => 191, 'nullable' => false, 'example' => 'city'])]
     private $name;
 
     /**
@@ -93,16 +78,8 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
      *
      * @Groups({"custom_item:read", "custom_item:write"})
      *
-     * @ApiProperty(
-     *     attributes={
-     *         "openapi_context"={
-     *             "type"="string",
-     *             "maxLength"=191,
-     *             "example"="en"
-     *         }
-     *     }
-     * )
      */
+    #[ApiProperty(openapiContext: ['type' => 'string', 'maxLength' => 191, 'example' => 'en'])]
     private $language;
 
     /**
@@ -112,10 +89,9 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
      *
      * @JoinColumn(name="category_id", referencedColumnName="id")
      *
-     * @ApiProperty(readableLink=false, writableLink=false)
-     *
      * @Groups({"custom_item:read", "custom_item:write"})
      **/
+    #[ApiProperty(readableLink: false, writableLink: false)]
     private $category;
 
     /**
@@ -126,35 +102,9 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
     /**
      * @var array
      *
-     * @ApiProperty(
-     *     attributes={
-     *         "openapi_context"={
-     *             "type"="array",
-     *             "items"={
-     *                 "type"="object",
-     *                 "properties"={
-     *                     "id"={
-     *                         "type"="string"
-     *                     },
-     *                     "value"={
-     *                         "type"="object",
-     *                         "additionalProperties"={
-     *                             "oneOf"={
-     *                                 {"type"="string"},
-     *                                 {"type"="number"},
-     *                                 {"type"="boolean"},
-     *                                 {"type"="array"}
-     *                             }
-     *                         }
-     *                     }
-     *                 }
-     *             }
-     *         }
-     *     }
-     * )
-     *
      * @Groups({"custom_item:read", "custom_item:write"})
      */
+    #[ApiProperty(openapiContext: ['type' => 'array', 'items' => ['type' => 'object', 'properties' => ['id' => ['type' => 'string'], 'value' => ['type' => 'object', 'additionalProperties' => ['oneOf' => [['type' => 'string'], ['type' => 'number'], ['type' => 'boolean'], ['type' => 'array']]]]]]])]
     private $fieldValues;
 
     /**

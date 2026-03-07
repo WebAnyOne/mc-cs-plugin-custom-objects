@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace MauticPlugin\CustomObjectsBundle\Entity;
 
-use ApiPlatform\Core\Annotation\ApiFilter;
-use ApiPlatform\Core\Annotation\ApiProperty;
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiSubresource;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Metadata\ApiProperty;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -34,25 +39,20 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-/**
- * @ApiResource(
- *     collectionOperations={
- *          "get"={"security"="'custom_objects:custom_fields:viewother'"},
- *          "post"={"security"="'custom_objects:custom_fields:create'"}
- *     },
- *     itemOperations={
- *          "get"={"security"="'custom_objects:custom_fields:view'"},
- *          "put"={"security"="'custom_objects:custom_fields:edit'"},
- *          "patch"={"security"="'custom_objects:custom_fields:edit'"},
- *          "delete"={"security"="'custom_objects:custom_fields:delete'"}
- *     },
- *     shortName="custom_fields",
- *     normalizationContext={"groups"={"custom_field:read"}, "swagger_definition_name"="Read"},
- *     denormalizationContext={"groups"={"custom_field:write"}, "swagger_definition_name"="Write"}
- * )
- *
- * @ApiFilter(SearchFilter::class, properties={"alias": "partial"})
- */
+#[ApiResource(
+    shortName: 'custom_fields',
+    operations: [
+        new GetCollection(security: "'custom_objects:custom_fields:viewother'"),
+        new Post(security: "'custom_objects:custom_fields:create'"),
+        new Get(security: "'custom_objects:custom_fields:view'"),
+        new Put(security: "'custom_objects:custom_fields:edit'"),
+        new Patch(security: "'custom_objects:custom_fields:edit'"),
+        new Delete(security: "'custom_objects:custom_fields:delete'"),
+    ],
+    normalizationContext: ['groups' => ['custom_field:read'], 'swagger_definition_name' => 'Read'],
+    denormalizationContext: ['groups' => ['custom_field:write'], 'swagger_definition_name' => 'Write'],
+)]
+#[ApiFilter(SearchFilter::class, properties: ['alias' => 'partial'])]
 class CustomField extends FormEntity implements UniqueEntityInterface, UuidInterface
 {
     use UuidTrait;
@@ -65,16 +65,8 @@ class CustomField extends FormEntity implements UniqueEntityInterface, UuidInter
      *
      * @Groups({"custom_field:read", "custom_object:read"})
      *
-     * @ApiProperty(
-     *     attributes={
-     *         "openapi_context"={
-     *             "type"="int",
-     *             "nullable"=false,
-     *             "example"="42"
-     *         }
-     *     }
-     * )
      */
+    #[ApiProperty(openapiContext: ['type' => 'int', 'nullable' => false, 'example' => '42'])]
     private $id;
 
     /**
@@ -82,17 +74,8 @@ class CustomField extends FormEntity implements UniqueEntityInterface, UuidInter
      *
      * @Groups({"custom_field:read", "custom_field:write", "custom_object:read", "custom_object:write"})
      *
-     * @ApiProperty(
-     *     attributes={
-     *         "openapi_context"={
-     *             "type"="string",
-     *             "maxLength"=191,
-     *             "nullable"=false,
-     *             "example"="City"
-     *         }
-     *     }
-     * )
      */
+    #[ApiProperty(openapiContext: ['type' => 'string', 'maxLength' => 191, 'nullable' => false, 'example' => 'City'])]
     private $label;
 
     /**
@@ -100,17 +83,8 @@ class CustomField extends FormEntity implements UniqueEntityInterface, UuidInter
      *
      * @Groups({"custom_field:read", "custom_field:write", "custom_object:read", "custom_object:write"})
      *
-     * @ApiProperty(
-     *     attributes={
-     *         "openapi_context"={
-     *             "type"="string",
-     *             "maxLength"=191,
-     *             "nullable"=false,
-     *             "example"="city"
-     *         }
-     *     }
-     * )
      */
+    #[ApiProperty(openapiContext: ['type' => 'string', 'maxLength' => 191, 'nullable' => false, 'example' => 'city'])]
     private $alias;
 
     /**
@@ -118,30 +92,8 @@ class CustomField extends FormEntity implements UniqueEntityInterface, UuidInter
      *
      * @Groups({"custom_field:read", "custom_field:write", "custom_object:read", "custom_object:write"})
      *
-     * @ApiProperty(
-     *     attributes={
-     *         "openapi_context"={
-     *             "type"="string",
-     *             "maxLength"=191,
-     *             "nullable"=false,
-     *             "example"="text",
-     *             "enum"={
-     *                 "checkbox_group",
-     *                 "country",
-     *                 "datetime",
-     *                 "date",
-     *                 "email",
-     *                 "hidden",
-     *                 "int",
-     *                 "multiselect",
-     *                 "phone",
-     *                 "radio_group",
-     *                 "select"
-     *             }
-     *         }
-     *     }
-     * )
      */
+    #[ApiProperty(openapiContext: ['type' => 'string', 'maxLength' => 191, 'nullable' => false, 'example' => 'text', 'enum' => ['checkbox_group', 'country', 'datetime', 'date', 'email', 'hidden', 'int', 'multiselect', 'phone', 'radio_group', 'select']])]
     private $type;
 
     /**
@@ -163,18 +115,9 @@ class CustomField extends FormEntity implements UniqueEntityInterface, UuidInter
     /**
      * @Groups({"custom_field:read", "custom_field:write", "custom_object:read", "custom_object:write"})
      *
-     * @ApiProperty(
-     *     attributes={
-     *         "openapi_context"={
-     *             "type"="integer",
-     *             "nullable"=true,
-     *             "example"=42
-     *         }
-     *     }
-     * )
-     *
      * @var int|null
      */
+    #[ApiProperty(openapiContext: ['type' => 'integer', 'nullable' => true, 'example' => 42])]
     private $order;
 
     /**
@@ -198,7 +141,6 @@ class CustomField extends FormEntity implements UniqueEntityInterface, UuidInter
      *
      * @Groups({"custom_field:read", "custom_field:write", "custom_object:read", "custom_object:write"})
      *
-     * @ApiSubresource()
      */
     private $options;
 
