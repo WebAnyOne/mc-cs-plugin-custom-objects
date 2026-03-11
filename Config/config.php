@@ -412,7 +412,6 @@ $coParams = [
                     'custom_object.helper.contact_filter_matcher',
                 ],
             ],
-
         ],
         'forms' => [
             'custom_field.field.params.to.string.transformer' => [
