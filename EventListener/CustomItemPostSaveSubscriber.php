@@ -16,7 +16,7 @@ class CustomItemPostSaveSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private CustomItemModel $customItemModel,
-        private RequestStack $requestStack
+        private RequestStack $requestStack,
     ) {
     }
 

@@ -27,7 +27,7 @@ class CustomObjectPermissions extends AbstractPermissions
         CoreParametersHelper $coreParametersHelper,
         private CustomObjectModel $customObjectModel,
         private ConfigProvider $configProvider,
-        private TranslatorInterface $translator
+        private TranslatorInterface $translator,
     ) {
         parent::__construct($coreParametersHelper->all());
     }

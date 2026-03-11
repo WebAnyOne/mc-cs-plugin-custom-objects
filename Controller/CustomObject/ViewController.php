@@ -23,7 +23,7 @@ class ViewController extends CommonController
         AuditLogModel $auditLogModel,
         CustomObjectPermissionProvider $permissionProvider,
         CustomObjectRouteProvider $routeProvider,
-        int $objectId
+        int $objectId,
     ): Response {
         $request = $this->getCurrentRequest();
 

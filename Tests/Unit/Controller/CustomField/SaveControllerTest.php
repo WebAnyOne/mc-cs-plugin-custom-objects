@@ -398,7 +398,7 @@ class SaveControllerTest extends AbstractFieldControllerTest
         string $fieldType,
         ?int $panelId = null,
         ?int $panelCount = null,
-        array $mapExtras = []
+        array $mapExtras = [],
     ): void {
         $this->requestStack  = $this->createRequestStackMock(
             $objectId,

@@ -45,7 +45,7 @@ class CampaignSubscriber implements EventSubscriberInterface
         private ConfigProvider $configProvider,
         private QueryFilterHelper $queryFilterHelper,
         private QueryFilterFactory $queryFilterFactory,
-        private Connection $connection
+        private Connection $connection,
     ) {
     }
 

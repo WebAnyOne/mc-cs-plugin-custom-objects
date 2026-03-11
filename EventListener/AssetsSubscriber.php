@@ -15,7 +15,7 @@ class AssetsSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private AssetsHelper $assetHelper,
-        private ConfigProvider $configProvider
+        private ConfigProvider $configProvider,
     ) {
     }
 

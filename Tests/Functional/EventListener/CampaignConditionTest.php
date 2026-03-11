@@ -26,7 +26,7 @@ class CampaignConditionTest extends MauticMysqlTestCase
         static::getContainer()->set(
             'session',
             new Session(
-                new class() extends FixedMockFileSessionStorage {
+                new class extends FixedMockFileSessionStorage {
                 }
             )
         );

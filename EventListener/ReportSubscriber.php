@@ -42,7 +42,7 @@ class ReportSubscriber implements EventSubscriberInterface
         private FieldsBuilder $fieldsBuilder,
         private CompanyReportData $companyReportData,
         private ReportHelper $reportHelper,
-        private TranslatorInterface $translator
+        private TranslatorInterface $translator,
     ) {
     }
 

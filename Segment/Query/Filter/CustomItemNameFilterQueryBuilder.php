@@ -20,7 +20,7 @@ class CustomItemNameFilterQueryBuilder extends BaseFilterQueryBuilder
     public function __construct(
         RandomParameterName $randomParameterNameService,
         private QueryFilterHelper $filterHelper,
-        EventDispatcherInterface $dispatcher
+        EventDispatcherInterface $dispatcher,
     ) {
         parent::__construct($randomParameterNameService, $dispatcher);
     }

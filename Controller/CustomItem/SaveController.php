@@ -30,7 +30,7 @@ class SaveController extends AbstractFormController
         CustomItemRouteProvider $routeProvider,
         LockFlashMessageHelper $lockFlashMessageHelper,
         int $objectId,
-        ?int $itemId = null
+        ?int $itemId = null,
     ): Response {
         $request = $this->getCurrentRequest();
 

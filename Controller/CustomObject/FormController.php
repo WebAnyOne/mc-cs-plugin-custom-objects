@@ -25,7 +25,7 @@ class FormController extends AbstractFormController
         FormFactoryInterface $formFactory,
         CustomObjectRouteProvider $routeProvider,
         CustomFieldTypeProvider $customFieldTypeProvider,
-        CustomFieldModel $customFieldModel
+        CustomFieldModel $customFieldModel,
     ): Response {
         try {
             $permissionProvider->canCreate();
@@ -52,7 +52,7 @@ class FormController extends AbstractFormController
         CustomObjectRouteProvider $routeProvider,
         CustomFieldTypeProvider $customFieldTypeProvider,
         CustomFieldModel $customFieldModel,
-        int $objectId
+        int $objectId,
     ): Response {
         try {
             $customObject = $customObjectModel->fetchEntity($objectId);
@@ -93,7 +93,7 @@ class FormController extends AbstractFormController
         CustomObjectRouteProvider $routeProvider,
         CustomFieldTypeProvider $customFieldTypeProvider,
         CustomFieldModel $customFieldModel,
-        int $objectId
+        int $objectId,
     ): Response {
         try {
             $customObject = clone $customObjectModel->fetchEntity($objectId);
@@ -120,7 +120,7 @@ class FormController extends AbstractFormController
         CustomFieldTypeProvider $customFieldTypeProvider,
         CustomFieldModel $customFieldModel,
         CustomObject $customObject,
-        string $route
+        string $route,
     ): Response {
         $form = $formFactory->create(
             CustomObjectType::class,

@@ -8,7 +8,7 @@ class NoRelationshipException extends \Exception
 {
     public function __construct(
         int $code = 403,
-        ?\Throwable $throwable = null
+        ?\Throwable $throwable = null,
     ) {
         parent::__construct(
             'This custom object does not have relationship fields defined.',

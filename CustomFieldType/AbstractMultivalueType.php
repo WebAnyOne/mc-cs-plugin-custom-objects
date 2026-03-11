@@ -25,7 +25,7 @@ abstract class AbstractMultivalueType extends AbstractCustomFieldType
     public function __construct(
         TranslatorInterface $translator,
         FilterOperatorProviderInterface $filterOperatorProvider,
-        private CsvHelper $csvHelper
+        private CsvHelper $csvHelper,
     ) {
         parent::__construct($translator, $filterOperatorProvider);
     }

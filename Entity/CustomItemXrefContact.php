@@ -20,7 +20,7 @@ class CustomItemXrefContact implements CustomItemXrefInterface
     public function __construct(
         private CustomItem $customItem,
         private Lead $contact,
-        ?\DateTimeInterface $dateAdded = null
+        ?\DateTimeInterface $dateAdded = null,
     ) {
         $this->dateAdded  = $dateAdded ?: new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
     }

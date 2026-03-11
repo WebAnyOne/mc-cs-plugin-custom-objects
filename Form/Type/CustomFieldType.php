@@ -33,7 +33,7 @@ class CustomFieldType extends AbstractType
         private CustomFieldTypeProvider $customFieldTypeProvider,
         private ParamsToStringTransformer $paramsToStringTransformer,
         private OptionsToStringTransformer $optionsToStringTransformer,
-        private CustomFieldFactory $customFieldFactory
+        private CustomFieldFactory $customFieldFactory,
     ) {
     }
 

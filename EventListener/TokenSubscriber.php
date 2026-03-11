@@ -25,7 +25,6 @@ use MauticPlugin\CustomObjectsBundle\Exception\InvalidArgumentException;
 use MauticPlugin\CustomObjectsBundle\Exception\InvalidCustomObjectFormatListException;
 use MauticPlugin\CustomObjectsBundle\Exception\InvalidSegmentFilterException;
 use MauticPlugin\CustomObjectsBundle\Exception\NotFoundException;
-use MauticPlugin\CustomObjectsBundle\Helper\ContactFilterMatcher;
 use MauticPlugin\CustomObjectsBundle\Helper\QueryBuilderManipulatorTrait;
 use MauticPlugin\CustomObjectsBundle\Helper\QueryFilterHelper;
 use MauticPlugin\CustomObjectsBundle\Helper\TokenFormatter;
@@ -55,7 +54,7 @@ class TokenSubscriber implements EventSubscriberInterface
         private EventModel $eventModel,
         private EventDispatcherInterface $eventDispatcher,
         private TokenFormatter $tokenFormatter,
-        private int $leadCustomItemFetchLimit
+        private int $leadCustomItemFetchLimit,
     ) {
     }
 
@@ -355,7 +354,7 @@ class TokenSubscriber implements EventSubscriberInterface
     private function getCustomFieldValue(
         CustomObject $customObject,
         string $customFieldAlias,
-        array $customItems
+        array $customItems,
     ): array {
         $fieldValues = [];
 

@@ -26,7 +26,7 @@ abstract class AbstractCustomFieldType implements CustomFieldTypeInterface, \Str
 
     public function __construct(
         protected TranslatorInterface $translator,
-        protected FilterOperatorProviderInterface $filterOperatorProvider
+        protected FilterOperatorProviderInterface $filterOperatorProvider,
     ) {
     }
 

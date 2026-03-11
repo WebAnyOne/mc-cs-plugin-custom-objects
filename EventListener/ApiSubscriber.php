@@ -24,7 +24,7 @@ class ApiSubscriber implements EventSubscriberInterface
     public function __construct(
         private ConfigProvider $configProvider,
         private CustomObjectModel $customObjectModel,
-        private CustomItemModel $customItemModel
+        private CustomItemModel $customItemModel,
     ) {
     }
 

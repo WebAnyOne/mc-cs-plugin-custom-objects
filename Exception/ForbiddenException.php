@@ -11,7 +11,7 @@ class ForbiddenException extends \Exception
         ?string $entityType = null,
         ?int $entityId = null,
         int $code = 403,
-        ?\Throwable $throwable = null
+        ?\Throwable $throwable = null,
     ) {
         parent::__construct(
             trim("You do not have permission to {$permission} {$entityType} {$entityId}"),

@@ -21,13 +21,13 @@ class QueryFilterFactory
         private CustomFieldTypeProvider $fieldTypeProvider,
         private CustomFieldRepository $customFieldRepository,
         private Calculator $calculator,
-        private int $itemRelationLevelLimit
+        private int $itemRelationLevelLimit,
     ) {
     }
 
     public function createQuery(
         string $alias,
-        ContactSegmentFilter $segmentFilter
+        ContactSegmentFilter $segmentFilter,
     ): UnionQueryContainer {
         $segmentFilterFieldId   = (int) $segmentFilter->getField();
         $segmentFilterFieldType = $segmentFilter->getType();

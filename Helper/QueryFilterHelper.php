@@ -21,14 +21,14 @@ class QueryFilterHelper
     public function __construct(
         private EntityManager $entityManager,
         private QueryFilterFactory $queryFilterFactory,
-        private RandomParameterName $randomParameterNameService
+        private RandomParameterName $randomParameterNameService,
     ) {
     }
 
     public function createValueQuery(
         string $alias,
         ContactSegmentFilter $segmentFilter,
-        bool $filterAlreadyNegated = false
+        bool $filterAlreadyNegated = false,
     ): UnionQueryContainer {
         $unionQueryContainer = $this->queryFilterFactory->createQuery($alias, $segmentFilter);
         $this->addCustomFieldValueExpressionFromSegmentFilter($unionQueryContainer, $alias, $segmentFilter, $filterAlreadyNegated);
@@ -69,7 +69,7 @@ class QueryFilterHelper
         UnionQueryContainer $unionQueryContainer,
         string $tableAlias,
         ContactSegmentFilter $filter,
-        bool $filterAlreadyNegated = false
+        bool $filterAlreadyNegated = false,
     ): void {
         $filterValue = $filter->getParameterValue();
         foreach ($unionQueryContainer as $segmentQueryBuilder) {
@@ -97,7 +97,7 @@ class QueryFilterHelper
         SegmentQueryBuilder $queryBuilder,
         string $tableAlias,
         string $operator,
-        ?string $value
+        ?string $value,
     ): void {
         $valueParameter = $this->randomParameterNameService->generateRandomParameterName();
         $expression     = $this->getCustomObjectNameExpression($queryBuilder, $tableAlias, $operator, $valueParameter);
@@ -113,7 +113,7 @@ class QueryFilterHelper
         $expression,
         string $operator,
         $value,
-        string $valueParameter
+        string $valueParameter,
     ): void {
         $valueType = null;
 
@@ -154,7 +154,7 @@ class QueryFilterHelper
         ContactSegmentFilter $filter,
         string $valueParameter,
         bool $alreadyNegated = false,
-        $filterParameterValue = null
+        $filterParameterValue = null,
     ) {
         $operator = $filter->getOperator();
         if ($alreadyNegated) {
@@ -254,7 +254,7 @@ class QueryFilterHelper
         SegmentQueryBuilder $customQuery,
         string $tableAlias,
         string $operator,
-        string $valueParameter
+        string $valueParameter,
     ) {
         return match ($operator) {
             'empty' => $customQuery->expr()->or(
@@ -318,7 +318,7 @@ class QueryFilterHelper
 
     public function createMergeFilterQuery(
         ContactSegmentFilter $segmentFilter,
-        string $leadsTableAlias
+        string $leadsTableAlias,
     ): SegmentQueryBuilder {
         $customItemXrefContactAlias = 'cix';
         $qb                         = new SegmentQueryBuilder($this->entityManager->getConnection());
@@ -380,7 +380,7 @@ class QueryFilterHelper
         SegmentQueryBuilder $qb,
         string $customItemXrefContactAlias,
         string $cinAliasItem,
-        int $segmentFilterFieldId
+        int $segmentFilterFieldId,
     ): void {
         $qb->leftJoin(
             $customItemXrefContactAlias,
@@ -396,7 +396,7 @@ class QueryFilterHelper
         string $customItemXrefContactAlias,
         string $dataTable,
         string $aliasValue,
-        int $segmentFilterFieldId
+        int $segmentFilterFieldId,
     ): void {
         $qb->innerJoin(
             $customItemXrefContactAlias,
@@ -418,7 +418,7 @@ class QueryFilterHelper
         string $cinAlias,
         string $alias,
         ContactSegmentFilter $filter,
-        string $valueParameter
+        string $valueParameter,
     ) {
         $segmentFilterFieldOperator = $filter->getOperator();
         if ($isCmoFilter) {

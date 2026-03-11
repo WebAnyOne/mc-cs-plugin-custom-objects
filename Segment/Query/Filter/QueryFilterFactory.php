@@ -15,7 +15,7 @@ class QueryFilterFactory
 {
     public function __construct(
         private ContactSegmentFilterFactory $contactSegmentFilterFactory,
-        private QueryFilterHelper $queryFilterHelper
+        private QueryFilterHelper $queryFilterHelper,
     ) {
     }
 

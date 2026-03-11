@@ -22,7 +22,7 @@ class ListController extends CommonController
         CustomObjectModel $customObjectModel,
         CustomObjectPermissionProvider $permissionProvider,
         CustomObjectRouteProvider $routeProvider,
-        int $page = 1
+        int $page = 1,
     ): Response {
         $request = $this->getCurrentRequest();
 

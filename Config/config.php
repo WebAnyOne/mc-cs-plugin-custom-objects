@@ -635,6 +635,7 @@ $coParams = [
             'custom_object.helper.token_formatter' => [
                 'class'     => MauticPlugin\CustomObjectsBundle\Helper\TokenFormatter::class,
             ],
+
             'custom_object.data_persister.custom_item' => [
                 'class'     => MauticPlugin\CustomObjectsBundle\DataPersister\CustomItemDataPersister::class,
                 'tag'       => 'api_platform.data_persister',
@@ -643,7 +644,7 @@ $coParams = [
                 ],
             ],
             'custom_object.helper.contact_filter_matcher' => [
-                'class'     => \MauticPlugin\CustomObjectsBundle\Helper\ContactFilterMatcher::class,
+                'class'     => MauticPlugin\CustomObjectsBundle\Helper\ContactFilterMatcher::class,
                 'arguments' => [
                     'mautic.custom.model.field',
                     'mautic.custom.model.object',

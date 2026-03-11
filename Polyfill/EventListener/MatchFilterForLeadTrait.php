@@ -67,6 +67,12 @@ trait MatchFilterForLeadTrait
             $subgroup     = null;
 
             if (is_array($leadValues)) {
+                if ('custom_object' === $data['object'] && [] === $leadValues) {
+                    // No custom items linked to this contact: only 'empty' is true.
+                    $groups[$groupNum] = 'empty' === $data['operator'];
+                    continue;
+                }
+
                 foreach ($leadValues as $leadVal) {
                     if ($subgroup) {
                         break;
@@ -164,14 +170,14 @@ trait MatchFilterForLeadTrait
                             $groups[$groupNum] = 1 !== preg_match('/'.$filterVal.'/i', $leadVal);
                             break;
                         case 'startsWith':
-                            $groups[$groupNum] = 0 === strncmp($leadVal, $filterVal, strlen($filterVal));
+                            $groups[$groupNum] = str_starts_with($leadVal, $filterVal);
                             break;
                         case 'endsWith':
                             $endOfString       = substr($leadVal, strlen($leadVal) - strlen($filterVal));
                             $groups[$groupNum] = 0 === strcmp($endOfString, $filterVal);
                             break;
                         case 'contains':
-                            $groups[$groupNum] = false !== strpos((string) $leadVal, (string) $filterVal);
+                            $groups[$groupNum] = str_contains((string) $leadVal, (string) $filterVal);
                             break;
                         default:
                             throw new OperatorsNotFoundException('Operator is not defined or invalid operator found.');
@@ -188,8 +194,6 @@ trait MatchFilterForLeadTrait
     /**
      * @param mixed[] $data
      * @param mixed[] $lead
-     *
-     * @return ?mixed[]
      */
     private function transformFilterDataForLead(array $data, array $lead): ?array
     {
@@ -208,7 +212,7 @@ trait MatchFilterForLeadTrait
                 return true;
             }
 
-            if ((0 === strpos($filter['field'], 'company') && 'company' !== $filter['field'])) {
+            if (str_starts_with($filter['field'], 'company') && 'company' !== $filter['field']) {
                 return true;
             }
         }

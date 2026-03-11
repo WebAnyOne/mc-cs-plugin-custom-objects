@@ -44,7 +44,7 @@ class CustomObjectPostSaveSubscriberTest extends TestCase
 
     public function testPostSaveMasterObject(): void
     {
-        $customObjectModel = new class() extends CustomObjectModel {
+        $customObjectModel = new class extends CustomObjectModel {
             public function __construct()
             {
                 // noop

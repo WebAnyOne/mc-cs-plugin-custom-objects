@@ -20,7 +20,7 @@ class CustomFieldValueModel
 {
     public function __construct(
         private EntityManager $entityManager,
-        private ValidatorInterface $validator
+        private ValidatorInterface $validator,
     ) {
     }
 

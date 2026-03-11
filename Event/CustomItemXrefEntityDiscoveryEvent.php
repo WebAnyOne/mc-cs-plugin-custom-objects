@@ -15,7 +15,7 @@ class CustomItemXrefEntityDiscoveryEvent extends Event
     public function __construct(
         private CustomItem $customItem,
         private string $entityType,
-        private int $entityId
+        private int $entityId,
     ) {
     }
 

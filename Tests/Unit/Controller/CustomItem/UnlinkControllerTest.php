@@ -165,10 +165,10 @@ class UnlinkControllerTest extends ControllerTestCase
 
     public function testSaveActionWithChildItem(): void
     {
-        $customObject = new class() extends CustomObject {
+        $customObject = new class extends CustomObject {
         };
 
-        $childCustomObject = new class() extends CustomObject {
+        $childCustomObject = new class extends CustomObject {
         };
 
         $customObject->setRelationshipObject($childCustomObject);

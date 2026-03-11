@@ -17,7 +17,7 @@ abstract class AbstractFieldControllerTest extends ControllerTestCase
         $fieldType = null,
         $panelId = null,
         $panelCount = null,
-        array $mapExtras = []
+        array $mapExtras = [],
     ): RequestStack {
         $request = $this->createMock(Request::class);
 

@@ -25,7 +25,7 @@ class CustomItemListeningExtension implements QueryCollectionExtensionInterface
         QueryBuilder $queryBuilder,
         QueryNameGeneratorInterface $queryNameGenerator,
         string $resourceClass,
-        string $operationName = null
+        string $operationName = null,
     ): void {
         if (CustomItem::class !== $resourceClass) {
             return;

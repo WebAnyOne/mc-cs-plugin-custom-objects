@@ -22,7 +22,7 @@ class CustomItemXrefCustomItemSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private EntityManager $entityManager,
-        private CustomItemRepository $customItemRepository
+        private CustomItemRepository $customItemRepository,
     ) {
     }
 

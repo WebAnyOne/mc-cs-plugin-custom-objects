@@ -19,7 +19,7 @@ class TableConfig
         private int $limit,
         private int $page,
         private string $orderBy,
-        private string $orderDirection = 'ASC'
+        private string $orderDirection = 'ASC',
     ) {
     }
 

@@ -503,7 +503,7 @@ class SaveControllerTest extends ControllerTestCase
             ->method('fetchEntity')
             ->with(self::OBJECT_ID)
             ->willReturn(
-                new class() extends CustomObject {
+                new class extends CustomObject {
                     public function getId()
                     {
                         return SaveControllerTest::OBJECT_ID;
@@ -511,7 +511,7 @@ class SaveControllerTest extends ControllerTestCase
 
                     public function getRelationshipObject(): CustomObject
                     {
-                        return new class() extends CustomObject {
+                        return new class extends CustomObject {
                             public function getId()
                             {
                                 return 6668;

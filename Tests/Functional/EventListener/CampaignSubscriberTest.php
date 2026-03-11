@@ -289,7 +289,7 @@ class CampaignSubscriberTest extends MauticMysqlTestCase
         Lead $contact,
         int $fieldId,
         string $operator,
-        $fieldValue = null
+        $fieldValue = null,
     ): CampaignExecutionEvent {
         return new CampaignExecutionEvent(
             [

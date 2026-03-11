@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace MauticPlugin\CustomObjectsBundle\Helper;
 
 use Doctrine\DBAL\Connection;
-use Mautic\EmailBundle\EventListener\MatchFilterForLeadTrait;
 use Mautic\LeadBundle\Entity\CompanyRepository;
 use Mautic\LeadBundle\Entity\LeadListRepository;
 use MauticPlugin\CustomObjectsBundle\DTO\TableConfig;
@@ -17,42 +16,25 @@ use MauticPlugin\CustomObjectsBundle\Model\CustomFieldModel;
 use MauticPlugin\CustomObjectsBundle\Model\CustomItemModel;
 use MauticPlugin\CustomObjectsBundle\Model\CustomObjectModel;
 use MauticPlugin\CustomObjectsBundle\Polyfill\EventListener\MatchFilterForLeadTrait as MatchFilterForLeadTraitPolyfill;
-
-if (method_exists(MatchFilterForLeadTrait::class, 'transformFilterDataForLead')) {
-    class_alias(MatchFilterForLeadTrait::class, '\MauticPlugin\CustomObjectsBundle\Helper\MatchFilterForLeadTraitAlias');
-} else {
-    class_alias(MatchFilterForLeadTraitPolyfill::class, '\MauticPlugin\CustomObjectsBundle\Helper\MatchFilterForLeadTraitAlias');
-}
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 class ContactFilterMatcher
 {
-    use MatchFilterForLeadTraitAlias {
-        transformFilterDataForLead as transformFilterDataForLeadAlias;
+    use MatchFilterForLeadTraitPolyfill {
+        transformFilterDataForLead as transformFilterDataForLeadPolyfill;
     }
 
-    private CustomFieldModel $customFieldModel;
-    private CustomObjectModel $customObjectModel;
-    private CustomItemModel $customItemModel;
-    private CompanyRepository $companyRepository;
-    private Connection $connection;
-    private int $leadCustomItemFetchLimit;
-
     public function __construct(
-        CustomFieldModel $customFieldModel,
-        CustomObjectModel $customObjectModel,
-        CustomItemModel $customItemModel,
+        private CustomFieldModel $customFieldModel,
+        private CustomObjectModel $customObjectModel,
+        private CustomItemModel $customItemModel,
         LeadListRepository $segmentRepository,
-        CompanyRepository $companyRepository,
-        Connection $connection,
-        int $leadCustomItemFetchLimit
+        private CompanyRepository $companyRepository,
+        private Connection $connection,
+        #[Autowire(param: 'mautic.custom_item_fetch_limit_per_lead')]
+        private int $leadCustomItemFetchLimit,
     ) {
-        $this->customFieldModel         = $customFieldModel;
-        $this->customObjectModel        = $customObjectModel;
-        $this->customItemModel          = $customItemModel;
-        $this->segmentRepository        = $segmentRepository;
-        $this->companyRepository        = $companyRepository;
-        $this->connection               = $connection;
-        $this->leadCustomItemFetchLimit = $leadCustomItemFetchLimit;
+        $this->segmentRepository = $segmentRepository;
     }
 
     /**
@@ -97,13 +79,13 @@ class ContactFilterMatcher
                     continue;
                 }
 
-                if ('cmf_' === substr($condition['field'], 0, 4)) {
+                if (str_starts_with($condition['field'], 'cmf_')) {
                     $customField  = $this->customFieldModel->fetchEntity(
                         (int) explode('cmf_', $condition['field'])[1]
                     );
                     $customObject = $customField->getCustomObject();
                     $fieldAlias   = $customField->getAlias();
-                } elseif ('cmo_' === substr($condition['field'], 0, 4)) {
+                } elseif (str_starts_with($condition['field'], 'cmo_')) {
                     $customObject = $this->customObjectModel->fetchEntity(
                         (int) explode('cmo_', $condition['field'])[1]
                     );
@@ -120,7 +102,7 @@ class ContactFilterMatcher
                 $result = $this->getCustomFieldValue($customObject, $fieldAlias, $cachedCustomItems[$key]);
 
                 $customFieldValues[$condition['field']] = $result;
-            } catch (NotFoundException|InvalidCustomObjectFormatListException $e) {
+            } catch (NotFoundException|InvalidCustomObjectFormatListException) {
                 continue;
             }
         }
@@ -136,7 +118,7 @@ class ContactFilterMatcher
     private function getCustomFieldValue(
         CustomObject $customObject,
         string $customFieldAlias,
-        array $customItems
+        array $customItems,
     ): array {
         $fieldValues = [];
 
@@ -165,7 +147,7 @@ class ContactFilterMatcher
                 } else {
                     $fieldValues[] = $fieldValue->getCustomField()->getTypeObject()->valueToString($fieldValue);
                 }
-            } catch (NotFoundException $e) {
+            } catch (NotFoundException) {
                 // Custom field not found.
             }
         }
@@ -192,8 +174,6 @@ class ContactFilterMatcher
     /**
      * @param mixed[] $data
      * @param mixed[] $lead
-     *
-     * @return ?mixed[]
      */
     private function transformFilterDataForLead(array $data, array $lead): ?array
     {
@@ -201,7 +181,7 @@ class ContactFilterMatcher
             return $lead[$data['field']];
         }
 
-        return $this->transformFilterDataForLeadAlias($data, $lead);
+        return $this->transformFilterDataForLeadPolyfill($data, $lead);
     }
 
     /**
@@ -214,7 +194,7 @@ class ContactFilterMatcher
             ->from(MAUTIC_TABLE_PREFIX.'lead_tags_xref', 'x')
             ->where('x.lead_id = :leadId')
             ->setParameter('leadId', $leadId)
-            ->execute()
+            ->executeQuery()
             ->fetchFirstColumn();
     }
 }

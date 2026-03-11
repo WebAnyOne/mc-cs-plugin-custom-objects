@@ -24,7 +24,7 @@ class CustomItemPostSaveSubscriberTest extends TestCase
 
     public function testPostSaveWithMasterItemDoesNotAttemptToLink(): void
     {
-        $customItemModel = new class() extends CustomItemModel {
+        $customItemModel = new class extends CustomItemModel {
             public function __construct()
             {
                 // noop
@@ -36,10 +36,10 @@ class CustomItemPostSaveSubscriberTest extends TestCase
             }
         };
 
-        $requestStack = new class() extends RequestStack {
+        $requestStack = new class extends RequestStack {
             public function getCurrentRequest()
             {
-                return new class() extends Request {
+                return new class extends Request {
                     public function __construct()
                     {
                         parent::__construct();
@@ -65,7 +65,7 @@ class CustomItemPostSaveSubscriberTest extends TestCase
 
     public function testPostSaveWithRelationshipButWrongRouteItemDoesNotAttemptToLink(): void
     {
-        $customItemModel = new class() extends CustomItemModel {
+        $customItemModel = new class extends CustomItemModel {
             public function __construct()
             {
                 // noop
@@ -77,10 +77,10 @@ class CustomItemPostSaveSubscriberTest extends TestCase
             }
         };
 
-        $requestStack = new class() extends RequestStack {
+        $requestStack = new class extends RequestStack {
             public function getCurrentRequest()
             {
-                return new class() extends Request {
+                return new class extends Request {
                     public function __construct()
                     {
                         parent::__construct();

@@ -20,7 +20,7 @@ class UnlinkController extends JsonController
         FlashBag $flashBag,
         int $itemId,
         string $entityType,
-        int $entityId
+        int $entityId,
     ): JsonResponse {
         try {
             $customItem = $customItemModel->fetchEntity($itemId);

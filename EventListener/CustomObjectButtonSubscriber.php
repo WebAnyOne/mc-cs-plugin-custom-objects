@@ -23,7 +23,7 @@ class CustomObjectButtonSubscriber implements EventSubscriberInterface
         private CustomObjectRouteProvider $routeProvider,
         private CustomItemPermissionProvider $customItemPermissionProvider,
         private CustomItemRouteProvider $customItemRouteProvider,
-        private TranslatorInterface $translator
+        private TranslatorInterface $translator,
     ) {
     }
 

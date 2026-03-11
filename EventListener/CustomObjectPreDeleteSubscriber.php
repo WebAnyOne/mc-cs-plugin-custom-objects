@@ -14,7 +14,7 @@ class CustomObjectPreDeleteSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private CustomObjectModel $customObjectModel,
-        private TranslatorInterface $translator
+        private TranslatorInterface $translator,
     ) {
     }
 

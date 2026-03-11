@@ -29,7 +29,7 @@ class ContactTabSubscriber implements EventSubscriberInterface
         private ConfigProvider $configProvider,
         private TranslatorInterface $translator,
         private CustomItemRouteProvider $customItemRouteProvider,
-        private SessionProviderFactory $sessionProviderFactory
+        private SessionProviderFactory $sessionProviderFactory,
     ) {
     }
 

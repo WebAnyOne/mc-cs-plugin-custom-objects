@@ -12,7 +12,7 @@ class CustomItemListQueryEvent extends Event
 {
     public function __construct(
         private QueryBuilder $queryBuilder,
-        private TableConfig $tableConfig
+        private TableConfig $tableConfig,
     ) {
     }
 
