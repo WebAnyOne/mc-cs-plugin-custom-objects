@@ -232,7 +232,7 @@ class FormControllerTest extends ControllerTestCase
 
     public function testNewWithRedirectToContactAction(): void
     {
-        $customObject = new class() extends CustomObject {
+        $customObject = new class extends CustomObject {
             public function getId()
             {
                 return FormControllerTest::OBJECT_ID;
@@ -281,7 +281,7 @@ class FormControllerTest extends ControllerTestCase
 
     public function testNewWithRedirectToContactActionWithChildObject(): void
     {
-        $customObject = new class() extends CustomObject {
+        $customObject = new class extends CustomObject {
             public function getId()
             {
                 return FormControllerTest::OBJECT_ID;
@@ -289,7 +289,7 @@ class FormControllerTest extends ControllerTestCase
 
             public function getRelationshipObject(): CustomObject
             {
-                return new class() extends CustomObject {
+                return new class extends CustomObject {
                     public function getId()
                     {
                         return 555;
@@ -450,7 +450,7 @@ class FormControllerTest extends ControllerTestCase
 
     public function testEditWithRedirectToContactAction(): void
     {
-        $customObject = new class() extends CustomObject {
+        $customObject = new class extends CustomObject {
             public function getId()
             {
                 return FormControllerTest::OBJECT_ID;
@@ -503,7 +503,7 @@ class FormControllerTest extends ControllerTestCase
 
     public function testEditWithRedirectToContactActionWithChildObject(): void
     {
-        $customObject = new class() extends CustomObject {
+        $customObject = new class extends CustomObject {
             public function getId()
             {
                 return FormControllerTest::OBJECT_ID;
@@ -511,7 +511,7 @@ class FormControllerTest extends ControllerTestCase
 
             public function getRelationshipObject(): CustomObject
             {
-                return new class() extends CustomObject {
+                return new class extends CustomObject {
                     public function getId()
                     {
                         return 555;

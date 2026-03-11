@@ -25,7 +25,7 @@ class DeleteController extends CommonController
         FlashBag $flashBag,
         CustomObjectPermissionProvider $permissionProvider,
         EventDispatcherInterface $eventDispatcher,
-        int $objectId
+        int $objectId,
     ): Response {
         $controller = 'MauticPlugin\CustomObjectsBundle\Controller\CustomObject\ListController:listAction';
         $page       = [

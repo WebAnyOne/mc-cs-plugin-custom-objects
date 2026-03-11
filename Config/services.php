@@ -17,6 +17,8 @@ return function (ContainerConfigurator $configurator): void {
         'Report/ReportColumnsBuilder.php',
         'Serializer/ApiNormalizer.php',
         'Extension/CustomItemListeningExtension.php',
+        // Registered explicitly in config.php with a non-autowirable int argument
+        'Helper/ContactFilterMatcher.php',
     ];
 
     $services->load('MauticPlugin\\CustomObjectsBundle\\', '../')

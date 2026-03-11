@@ -23,7 +23,7 @@ final class CustomObjectFunctionalTest extends AbstractApiPlatformFunctionalTest
         ?string $retrievedAlias,
         string $httpUpdated,
         ?string $updatedAlias,
-        string $httpDeleted
+        string $httpDeleted,
     ): void {
         $user = $this->getUser();
         $this->setPermission($user, 'custom_objects:custom_objects', $permissions);

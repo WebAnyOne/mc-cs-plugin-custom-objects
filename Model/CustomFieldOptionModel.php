@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManager;
 class CustomFieldOptionModel
 {
     public function __construct(
-        private EntityManager $entityManager
+        private EntityManager $entityManager,
     ) {
     }
 

@@ -94,7 +94,7 @@ class CustomFieldFilterQueryBuilderTest extends MauticMysqlTestCase
         $value,
         string $type = 'text',
         string $operator = 'eq',
-        string $fixtureField = 'custom_field1'
+        string $fixtureField = 'custom_field1',
     ): MockObject {
         $filterMock = $this->getMockBuilder(ContactSegmentFilter::class)
             ->disableOriginalConstructor()

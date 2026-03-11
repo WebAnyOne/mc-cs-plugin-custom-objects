@@ -17,7 +17,7 @@ class CustomItemXrefContactModel extends FormModel
     public function getLinksLineChartData(
         \DateTime $from,
         \DateTime $to,
-        CustomItem $customItem
+        CustomItem $customItem,
     ): array {
         $chart = new LineChart(null, $from, $to);
         $query = new ChartQuery($this->em->getConnection(), $from, $to);

@@ -329,7 +329,7 @@ class FormControllerTest extends AbstractFieldControllerTest
         ?int $fieldId,
         string $fieldType,
         ?int $panelId = null,
-        ?int $panelCount = null
+        ?int $panelCount = null,
     ): void {
         $this->requestStack  = $this->createRequestStackMock(
             $objectId,

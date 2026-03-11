@@ -41,7 +41,7 @@ class SaveController extends CommonController
         CustomFieldFactory $customFieldFactory,
         CustomFieldPermissionProvider $permissionProvider,
         CustomFieldRouteProvider $fieldRouteProvider,
-        CustomObjectModel $customObjectModel
+        CustomObjectModel $customObjectModel,
     ) {
         $request    = $this->getCurrentRequest();
 
@@ -111,7 +111,7 @@ class SaveController extends CommonController
         CustomField $customField,
         Request $request,
         CustomFieldModel $customFieldModel,
-        FormFactoryInterface $formFactory
+        FormFactoryInterface $formFactory,
     ): JsonResponse {
         $panelId = is_numeric($request->get('panelId')) ? (int) $request->get('panelId') : null; // Is edit of existing panel in view
 

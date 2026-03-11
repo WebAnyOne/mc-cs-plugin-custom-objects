@@ -26,7 +26,7 @@ class ExportController extends AbstractFormController
     public function exportAction(
         CustomItemPermissionProvider $permissionProvider,
         CustomItemExportSchedulerModel $model,
-        int $object
+        int $object,
     ): Response {
         $permissionProvider->canCreate($object);
 

@@ -644,7 +644,7 @@ $coParams = [
                 ],
             ],
             'custom_object.helper.contact_filter_matcher' => [
-                'class'     => \MauticPlugin\CustomObjectsBundle\Helper\ContactFilterMatcher::class,
+                'class'     => MauticPlugin\CustomObjectsBundle\Helper\ContactFilterMatcher::class,
                 'arguments' => [
                     'mautic.custom.model.field',
                     'mautic.custom.model.object',

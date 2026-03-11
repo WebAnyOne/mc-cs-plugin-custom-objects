@@ -92,7 +92,7 @@ class TableConfigTest extends \PHPUnit\Framework\TestCase
         int $limit = self::LIMIT,
         int $page = self::PAGE,
         string $orderBy = self::ORDER_BY,
-        string $orderDirection = self::ORDER_BY_DIR
+        string $orderDirection = self::ORDER_BY_DIR,
     ): TableConfig {
         return new TableConfig(
             $limit,

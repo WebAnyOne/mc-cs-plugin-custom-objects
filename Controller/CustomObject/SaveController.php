@@ -37,7 +37,7 @@ class SaveController extends AbstractFormController
         ParamsToStringTransformer $paramsToStringTransformer,
         OptionsToStringTransformer $optionsToStringTransformer,
         LockFlashMessageHelper $lockFlashMessageHelper,
-        ?int $objectId = null
+        ?int $objectId = null,
     ): Response {
         $request = $this->getCurrentRequest();
 
@@ -133,7 +133,7 @@ class SaveController extends AbstractFormController
         ParamsToStringTransformer $paramsToStringTransformer,
         OptionsToStringTransformer $optionsToStringTransformer,
         CustomObject $customObject,
-        array $rawCustomObject
+        array $rawCustomObject,
     ): void {
         if (empty($rawCustomObject['customFields'])) {
             return;

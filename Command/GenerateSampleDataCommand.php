@@ -22,7 +22,7 @@ class GenerateSampleDataCommand extends Command
 
     public function __construct(
         private EntityManager $entityManager,
-        private RandomHelper $randomHelper
+        private RandomHelper $randomHelper,
     ) {
         parent::__construct();
 

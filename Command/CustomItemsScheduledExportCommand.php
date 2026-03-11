@@ -21,7 +21,7 @@ class CustomItemsScheduledExportCommand extends Command
     public function __construct(
         private CustomItemExportSchedulerModel $customItemExportSchedulerModel,
         private EventDispatcherInterface $eventDispatcher,
-        private FormatterHelper $formatterHelper
+        private FormatterHelper $formatterHelper,
     ) {
         parent::__construct();
     }

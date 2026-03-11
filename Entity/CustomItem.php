@@ -188,7 +188,7 @@ class CustomItem extends FormEntity implements UniqueEntityInterface, UpsertInte
      *
      * @Groups({"custom_item:read", "custom_item:write"})
      */
-        private CustomObject $customObject
+        private CustomObject $customObject,
     ) {
         $this->customFieldValues         = new ArrayCollection();
         $this->contactReferences         = new ArrayCollection();

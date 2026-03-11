@@ -26,7 +26,7 @@ class ViewController extends CommonController
         CustomItemPermissionProvider $permissionProvider,
         CustomItemRouteProvider $routeProvider,
         int $objectId,
-        int $itemId
+        int $itemId,
     ): Response {
         $request = $this->getCurrentRequest();
 

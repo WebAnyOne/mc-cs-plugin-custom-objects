@@ -26,7 +26,7 @@ class ListController extends CommonController
         CustomItemPermissionProvider $permissionProvider,
         CustomItemRouteProvider $routeProvider,
         int $objectId,
-        int $page = 1
+        int $page = 1,
     ): Response {
         $request = $this->getCurrentRequest();
 

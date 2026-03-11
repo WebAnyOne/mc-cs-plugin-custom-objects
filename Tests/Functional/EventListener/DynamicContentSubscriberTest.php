@@ -83,6 +83,7 @@ class DynamicContentSubscriberTest extends MauticMysqlTestCase
 
     /**
      * @param mixed[] $filters
+     *
      * @dataProvider filtersDataProvider
      */
     public function testCustomObjectFiltersAreFollowedWhenEmailIsSent(bool $shouldMatch, array $filters): void
@@ -126,6 +127,7 @@ class DynamicContentSubscriberTest extends MauticMysqlTestCase
 
     /**
      * @param mixed[] $filters
+     *
      * @dataProvider filtersDataProvider
      */
     public function testCustomObjectFiltersAreFollowedInPagePreview(bool $shouldMatch, array $filters): void

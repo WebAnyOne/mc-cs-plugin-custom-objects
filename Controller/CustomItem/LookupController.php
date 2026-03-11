@@ -22,7 +22,7 @@ class LookupController extends JsonController
         CustomItemModel $customItemModel,
         CustomItemPermissionProvider $permissionProvider,
         FlashBag $flashBag,
-        int $objectId
+        int $objectId,
     ): JsonResponse {
         try {
             $permissionProvider->canViewAtAll($objectId);

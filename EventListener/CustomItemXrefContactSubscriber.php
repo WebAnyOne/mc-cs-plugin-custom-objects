@@ -28,7 +28,7 @@ class CustomItemXrefContactSubscriber implements EventSubscriberInterface
     public function __construct(
         private EntityManager $entityManager,
         private UserHelper $userHelper,
-        private CustomItemRepository $customItemRepository
+        private CustomItemRepository $customItemRepository,
     ) {
     }
 

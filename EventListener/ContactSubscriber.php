@@ -27,7 +27,7 @@ class ContactSubscriber implements EventSubscriberInterface
         private CustomItemRouteProvider $routeProvider,
         private CustomItemModel $customItemModel,
         private ConfigProvider $configProvider,
-        private CustomItemXrefContactRepository $customItemXrefContactRepository
+        private CustomItemXrefContactRepository $customItemXrefContactRepository,
     ) {
     }
 

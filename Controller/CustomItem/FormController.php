@@ -25,7 +25,7 @@ class FormController extends AbstractFormController
         CustomItemModel $customItemModel,
         CustomObjectModel $customObjectModel,
         CustomItemPermissionProvider $permissionProvider,
-        int $objectId
+        int $objectId,
     ): Response {
         try {
             $customItem = $this->performNewAction($customObjectModel, $customItemModel, $permissionProvider, $objectId);
@@ -48,7 +48,7 @@ class FormController extends AbstractFormController
         CustomObjectModel $customObjectModel,
         CustomItemPermissionProvider $permissionProvider,
         int $objectId,
-        int $contactId
+        int $contactId,
     ): Response {
         try {
             $customItem = $this->performNewAction($customObjectModel, $customItemModel, $permissionProvider, $objectId);
@@ -77,7 +77,7 @@ class FormController extends AbstractFormController
         CustomObjectModel $customObjectModel,
         CustomItemModel $customItemModel,
         CustomItemPermissionProvider $permissionProvider,
-        int $objectId
+        int $objectId,
     ): CustomItem {
         $permissionProvider->canCreate($objectId);
 
@@ -95,7 +95,7 @@ class FormController extends AbstractFormController
         LockFlashMessageHelper $lockFlashMessageHelper,
         CustomItemPermissionProvider $permissionProvider,
         int $objectId,
-        int $itemId
+        int $itemId,
     ): Response {
         try {
             $customItem = $this->performEditAction($customItemModel, $permissionProvider, $itemId);
@@ -134,7 +134,7 @@ class FormController extends AbstractFormController
         CustomItemPermissionProvider $permissionProvider,
         int $objectId,
         int $itemId,
-        int $contactId
+        int $contactId,
     ): Response {
         try {
             $customItem = $this->performEditAction($customItemModel, $permissionProvider, $itemId);
@@ -180,7 +180,7 @@ class FormController extends AbstractFormController
         CustomItemModel $customItemModel,
         CustomItemPermissionProvider $permissionProvider,
         int $objectId,
-        int $itemId
+        int $itemId,
     ): Response {
         try {
             $customItem = clone $customItemModel->fetchEntity($itemId);
@@ -204,7 +204,7 @@ class FormController extends AbstractFormController
     private function performEditAction(
         CustomItemModel $customItemModel,
         CustomItemPermissionProvider $permissionProvider,
-        int $itemId
+        int $itemId,
     ): CustomItem {
         $customItem = $customItemModel->fetchEntity($itemId);
         $permissionProvider->canEdit($customItem);
@@ -217,7 +217,7 @@ class FormController extends AbstractFormController
         CustomItemRouteProvider $routeProvider,
         CustomItem $customItem,
         string $route,
-        ?int $contactId = null
+        ?int $contactId = null,
     ): Response {
         $action  = $routeProvider->buildSaveRoute($customItem->getCustomObject()->getId(), $customItem->getId());
         $options = [

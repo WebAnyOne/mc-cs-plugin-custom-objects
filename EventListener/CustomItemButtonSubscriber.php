@@ -19,7 +19,7 @@ class CustomItemButtonSubscriber implements EventSubscriberInterface
     public function __construct(
         private CustomItemPermissionProvider $permissionProvider,
         private CustomItemRouteProvider $routeProvider,
-        private TranslatorInterface $translator
+        private TranslatorInterface $translator,
     ) {
     }
 

@@ -27,7 +27,7 @@ class SerializerSubscriber implements EventSubscriberInterface
         private ConfigProvider $configProvider,
         private CustomItemXrefContactRepository $customItemXrefContactRepository,
         private CustomItemModel $customItemModel,
-        private RequestStack $requestStack
+        private RequestStack $requestStack,
     ) {
     }
 

@@ -14,7 +14,7 @@ final class CustomItemPostDeleteSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private CustomItemXrefCustomItemRepository $customItemXrefCustomItemRepository,
-        private CustomItemXrefContactRepository $customItemXrefContactRepository
+        private CustomItemXrefContactRepository $customItemXrefContactRepository,
     ) {
     }
 

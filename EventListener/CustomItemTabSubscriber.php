@@ -27,7 +27,7 @@ class CustomItemTabSubscriber implements EventSubscriberInterface
         private CustomItemRepository $customItemRepository,
         private TranslatorInterface $translator,
         private CustomItemRouteProvider $customItemRouteProvider,
-        private SessionProviderFactory $sessionProviderFactory
+        private SessionProviderFactory $sessionProviderFactory,
     ) {
     }
 

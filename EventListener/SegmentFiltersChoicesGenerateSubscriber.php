@@ -32,7 +32,7 @@ class SegmentFiltersChoicesGenerateSubscriber implements EventSubscriberInterfac
         TranslatorInterface $translator,
         private ConfigProvider $configProvider,
         private CustomFieldTypeProvider $fieldTypeProvider,
-        private TypeOperatorProviderInterface $typeOperatorProvider
+        private TypeOperatorProviderInterface $typeOperatorProvider,
     ) {
         $this->translator = $translator;
     }

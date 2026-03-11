@@ -16,7 +16,7 @@ class CustomObjectMergedFilterQueryBuilder extends BaseFilterQueryBuilder
     public function __construct(
         RandomParameterName $randomParameterNameService,
         EventDispatcherInterface $dispatcher,
-        private QueryFilterHelper $queryFilterHelper
+        private QueryFilterHelper $queryFilterHelper,
     ) {
         parent::__construct($randomParameterNameService, $dispatcher);
     }

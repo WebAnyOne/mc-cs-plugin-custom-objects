@@ -31,7 +31,7 @@ class LinkFormController extends AbstractFormController
         FlashBag $flashBag,
         int $itemId,
         string $entityType,
-        int $entityId
+        int $entityId,
     ): Response {
         try {
             $customItem = $customItemModel->fetchEntity($itemId);
@@ -93,7 +93,7 @@ class LinkFormController extends AbstractFormController
         FlashBag $flashBag,
         int $itemId,
         string $entityType,
-        int $entityId
+        int $entityId,
     ): Response {
         $relationshipItem   = null;
         $relationshipObject = null;
@@ -164,7 +164,7 @@ class LinkFormController extends AbstractFormController
         CustomObject $relationshipObject,
         CustomItem $customItem,
         string $entityType,
-        int $entityId
+        int $entityId,
     ): CustomItem {
         /** @var CustomItemXrefCustomItem|null $relationshipItemXref */
         $relationshipItemXref = $customItem->getCustomItemLowerReferences()

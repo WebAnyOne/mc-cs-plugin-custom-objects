@@ -24,7 +24,7 @@ final class CustomFieldFunctionalTest extends AbstractApiPlatformFunctionalTest
         ?string $retrievedLabel,
         string $httpUpdated,
         ?string $updatedLabel,
-        string $httpDeleted
+        string $httpDeleted,
     ): void {
         // USER
         $user = $this->getUser();
@@ -177,7 +177,7 @@ final class CustomFieldFunctionalTest extends AbstractApiPlatformFunctionalTest
         ?int $updatedOptionsCount,
         ?array $updatedOptions,
         ?string $updatedDeafaultValue,
-        string $httpDeleted
+        string $httpDeleted,
     ): void {
         // USER
         $user = $this->getUser();

@@ -22,7 +22,7 @@ class BatchDeleteController extends CommonController
         CustomItemPermissionProvider $permissionProvider,
         CustomItemRouteProvider $routeProvider,
         FlashBag $flashBag,
-        int $objectId
+        int $objectId,
     ): Response {
         $request = $this->getCurrentRequest();
 

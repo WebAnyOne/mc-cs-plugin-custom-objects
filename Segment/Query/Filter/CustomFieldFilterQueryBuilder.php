@@ -17,7 +17,7 @@ class CustomFieldFilterQueryBuilder extends BaseFilterQueryBuilder
     public function __construct(
         RandomParameterName $randomParameterNameService,
         EventDispatcherInterface $dispatcher,
-        private QueryFilterHelper $filterHelper
+        private QueryFilterHelper $filterHelper,
     ) {
         parent::__construct($randomParameterNameService, $dispatcher);
     }

@@ -33,7 +33,7 @@ class ImportSubscriber implements EventSubscriberInterface
         private ConfigProvider $configProvider,
         private CustomItemPermissionProvider $permissionProvider,
         private CustomFieldRepository $customFieldRepository,
-        private TranslatorInterface $translator
+        private TranslatorInterface $translator,
     ) {
     }
 

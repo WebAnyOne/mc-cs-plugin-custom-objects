@@ -21,7 +21,7 @@ class CampaignConditionFieldValueType extends AbstractType
         protected CustomFieldModel $customFieldModel,
         private CustomObjectModel $customObjectModel,
         protected CustomItemRouteProvider $routeProvider,
-        protected TranslatorInterface $translator
+        protected TranslatorInterface $translator,
     ) {
     }
 

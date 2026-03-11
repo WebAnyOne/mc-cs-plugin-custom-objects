@@ -15,7 +15,7 @@ class LockFlashMessageHelper
         private CoreParametersHelper $coreParametersHelper,
         private TranslatorInterface $translator,
         private FlashBag $flashBag,
-        private Router $router
+        private Router $router,
     ) {
     }
 

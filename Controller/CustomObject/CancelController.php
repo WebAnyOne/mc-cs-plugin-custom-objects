@@ -16,7 +16,7 @@ class CancelController extends CommonController
         SessionProviderFactory $sessionProviderFactory,
         CustomObjectRouteProvider $routeProvider,
         CustomObjectModel $customObjectModel,
-        ?int $objectId
+        ?int $objectId,
     ): Response {
         $page = $sessionProviderFactory->createObjectProvider()->getPage();
 

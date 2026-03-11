@@ -21,7 +21,7 @@ class CancelController extends CommonController
         CustomItemRouteProvider $routeProvider,
         CustomItemModel $customItemModel,
         int $objectId,
-        ?int $itemId = null
+        ?int $itemId = null,
     ): Response {
         $page = $sessionProviderFactory->createItemProvider($objectId)->getPage();
 

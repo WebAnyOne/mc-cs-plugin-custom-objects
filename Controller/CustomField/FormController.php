@@ -27,7 +27,7 @@ class FormController extends CommonController
         CustomFieldPermissionProvider $permissionProvider,
         CustomFieldRouteProvider $fieldRouteProvider,
         CustomObjectModel $customObjectModel,
-        CustomObjectRouteProvider $objectRouteProvider
+        CustomObjectRouteProvider $objectRouteProvider,
     ): Response {
         $request    = $this->getCurrentRequest();
         $objectId   = (int) $request->get('objectId');

@@ -23,7 +23,7 @@ class SegmentFiltersDictionarySubscriber implements EventSubscriberInterface
 
     public function __construct(
         private ManagerRegistry $doctrineRegistry,
-        private ConfigProvider $configProvider
+        private ConfigProvider $configProvider,
     ) {
     }
 

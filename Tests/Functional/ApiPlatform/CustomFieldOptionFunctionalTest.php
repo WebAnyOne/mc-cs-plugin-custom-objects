@@ -30,7 +30,7 @@ final class CustomFieldOptionFunctionalTest extends AbstractApiPlatformFunctiona
         ?string $retrievedLabel,
         string $httpUpdated,
         ?string $updatedLabel,
-        string $httpDeleted
+        string $httpDeleted,
     ): void {
         // USER
         $user = $this->getUser();
