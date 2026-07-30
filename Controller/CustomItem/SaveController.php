@@ -34,7 +34,10 @@ class SaveController extends AbstractFormController
     ): Response {
         $request = $this->getCurrentRequest();
 
-        $customItemData = $request->request->get('custom_item');
+        // Symfony 6.4's InputBag::get() rejects non-scalar values (throws BadRequestException),
+        // and 'custom_item' is submitted as an array-shaped form field. Use all() to retrieve it;
+        // it returns [] when the key is absent, so the contact_id fallback below still works.
+        $customItemData = $request->request->all('custom_item');
         $contactId      = intval($customItemData['contact_id'] ?? 0);
 
         try {
