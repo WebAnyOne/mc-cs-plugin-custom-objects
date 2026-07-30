@@ -108,6 +108,8 @@ class SaveController extends AbstractFormController
             );
 
             $saveClicked = $form->get('buttons')->get('save')->isClicked();
+            // Symfony's ControllerResolver::createController() requires the double-colon
+            // Class::method format for direct class references; the single-colon "a:b:c" bundle-alias shorthand no longer applies.
             $detailView  = 'MauticPlugin\CustomObjectsBundle\Controller\CustomItem\ViewController::viewAction';
             $formView    = 'MauticPlugin\CustomObjectsBundle\Controller\CustomItem\FormController::editAction';
 
