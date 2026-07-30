@@ -27,10 +27,10 @@ use MauticPlugin\CustomObjectsBundle\Entity\CustomObject;
 use MauticPlugin\CustomObjectsBundle\Event\CustomItemListDbalQueryEvent;
 use MauticPlugin\CustomObjectsBundle\EventListener\TokenSubscriber;
 use MauticPlugin\CustomObjectsBundle\Exception\NotFoundException;
-use MauticPlugin\CustomObjectsBundle\Helper\ContactFilterMatcher;
 use MauticPlugin\CustomObjectsBundle\Helper\QueryFilterHelper;
 use MauticPlugin\CustomObjectsBundle\Helper\TokenFormatter;
 use MauticPlugin\CustomObjectsBundle\Helper\TokenParser;
+use MauticPlugin\CustomObjectsBundle\Model\CustomFieldModel;
 use MauticPlugin\CustomObjectsBundle\Model\CustomItemModel;
 use MauticPlugin\CustomObjectsBundle\Model\CustomObjectModel;
 use MauticPlugin\CustomObjectsBundle\Provider\ConfigProvider;
@@ -66,6 +66,11 @@ class TokenSubscriberTest extends TestCase
      * @var CustomItemModel&MockObject
      */
     private $customItemModel;
+
+    /**
+     * @var CustomFieldModel&MockObject
+     */
+    private $customFieldModel;
 
     /**
      * @var TokenParser|MockObject
@@ -107,11 +112,6 @@ class TokenSubscriberTest extends TestCase
      */
     private $customItemListDbalQueryEvent;
 
-    /**
-     * @var ContactFilterMatcher&MockObject
-     */
-    private $contactFilterMatcher;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -121,22 +121,23 @@ class TokenSubscriberTest extends TestCase
         $this->queryFilterFactory   = $this->createMock(QueryFilterFactory::class);
         $this->customObjectModel    = $this->createMock(CustomObjectModel::class);
         $this->customItemModel      = $this->createMock(CustomItemModel::class);
+        $this->customFieldModel     = $this->createMock(CustomFieldModel::class);
         $this->tokenParser          = $this->createMock(TokenParser::class);
         $this->eventModel           = $this->createMock(EventModel::class);
         $this->eventDispatcher      = $this->createMock(EventDispatcher::class);
         $this->tokenFormatter       = $this->createMock(TokenFormatter::class);
-        $this->contactFilterMatcher = $this->createMock(ContactFilterMatcher::class);
         $this->subscriber           = new TokenSubscriber(
             $this->configProvider,
             $this->queryFilterHelper,
             $this->queryFilterFactory,
             $this->customObjectModel,
             $this->customItemModel,
+            $this->customFieldModel,
             $this->tokenParser,
             $this->eventModel,
             $this->eventDispatcher,
             $this->tokenFormatter,
-            $this->contactFilterMatcher
+            15
         );
 
         $this->builderEvent                 = $this->createMock(BuilderEvent::class);
@@ -845,21 +846,22 @@ class TokenSubscriberTest extends TestCase
         $this->queryFilterFactory   = $this->createMock(QueryFilterFactory::class);
         $this->customObjectModel    = $this->createMock(CustomObjectModel::class);
         $this->customItemModel      = $this->createMock(CustomItemModel::class);
+        $this->customFieldModel     = $this->createMock(CustomFieldModel::class);
         $this->tokenParser          = new TokenParser();
         $this->eventModel           = $this->createMock(EventModel::class);
         $this->eventDispatcher      = $this->createMock(EventDispatcher::class);
-        $this->contactFilterMatcher = $this->createMock(ContactFilterMatcher::class);
         $this->subscriber           = new TokenSubscriber(
             $this->configProvider,
             $this->queryFilterHelper,
             $this->queryFilterFactory,
             $this->customObjectModel,
             $this->customItemModel,
+            $this->customFieldModel,
             $this->tokenParser,
             $this->eventModel,
             $this->eventDispatcher,
             new TokenFormatter(),
-            $this->contactFilterMatcher
+            15
         );
     }
 }
