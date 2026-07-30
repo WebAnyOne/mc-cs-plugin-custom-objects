@@ -18,7 +18,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormConfigBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -157,7 +156,7 @@ final class CampaignConditionFieldValueTypeTest extends TestCase
                 'field' => 42,
             ],
         ];
-        $formConfigBuilderMock = $this->createMock(FormConfigBuilderInterface::class);
+        $formConfigBuilderMock = $this->createMock(FormBuilderInterface::class);
         $formBuilderMock
             ->expects($this->once())
             ->method('get')
