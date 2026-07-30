@@ -36,15 +36,15 @@ class CampaignConditionTest extends MauticMysqlTestCase
 
     public function testConditionForm(): void
     {
-        $session = self::$container->get('session');
+        $session = static::getContainer()->get('session');
         // @phpstan-ignore-next-line Fixing "cannot serialize anonymous function in \Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage::save()
         $session->__construct(new MockArraySessionStorage());
 
-        $sessionAuthenticationStrategy = self::$container->get('security.authentication.session_strategy');
+        $sessionAuthenticationStrategy = static::getContainer()->get('security.authentication.session_strategy');
         // @phpstan-ignore-next-line Prevent clearing CSRF token storage in \Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy::onAuthentication()
         $sessionAuthenticationStrategy->__construct(SessionAuthenticationStrategy::MIGRATE);
 
-        $customObject = $this->createCustomObjectWithAllFields(self::$container, 'Campaign test object');
+        $customObject = $this->createCustomObjectWithAllFields(static::getContainer(), 'Campaign test object');
         $crawler      = $this->client->request(
             Request::METHOD_GET,
             's/campaigns/events/new',
@@ -73,7 +73,7 @@ class CampaignConditionTest extends MauticMysqlTestCase
         $form       = $saveButton->form();
         $form['campaignevent[properties][value]']->setValue('unicorn');
         $form['campaignevent[properties][operator]']->setValue('=');
-        $form['campaignevent[properties][field]']->setValue($textField->getId());
+        $form['campaignevent[properties][field]']->setValue((string) $textField->getId());
 
         $this->client->request($form->getMethod(), $form->getUri(), $form->getPhpValues(), $form->getPhpFiles(), $this->createAjaxHeaders());
         Assert::assertTrue($this->client->getResponse()->isOk(), $this->client->getResponse()->getContent());
@@ -88,7 +88,7 @@ class CampaignConditionTest extends MauticMysqlTestCase
 
     public function testVerifyDataOperatorAttrIsAvailableForFields(): void
     {
-        $customObject = $this->createCustomObjectWithAllFields(self::$container, 'Campaign test object');
+        $customObject = $this->createCustomObjectWithAllFields(static::getContainer(), 'Campaign test object');
         $crawler      = $this->client->request(
             Request::METHOD_GET,
             's/campaigns/events/new',
@@ -115,5 +115,13 @@ class CampaignConditionTest extends MauticMysqlTestCase
         foreach ($options as $option) {
             Assert::assertNotEmpty($option->getAttribute('data-operators'));
         }
+    }
+
+    /**
+     * @return array<string,string>
+     */
+    private function createAjaxHeaders(): array
+    {
+        return ['HTTP_X-Requested-With' => 'XMLHttpRequest'];
     }
 }
