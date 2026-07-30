@@ -27,6 +27,7 @@ use MauticPlugin\CustomObjectsBundle\Entity\CustomObject;
 use MauticPlugin\CustomObjectsBundle\Event\CustomItemListDbalQueryEvent;
 use MauticPlugin\CustomObjectsBundle\EventListener\TokenSubscriber;
 use MauticPlugin\CustomObjectsBundle\Exception\NotFoundException;
+use MauticPlugin\CustomObjectsBundle\Helper\ContactFilterMatcher;
 use MauticPlugin\CustomObjectsBundle\Helper\QueryFilterHelper;
 use MauticPlugin\CustomObjectsBundle\Helper\TokenFormatter;
 use MauticPlugin\CustomObjectsBundle\Helper\TokenParser;
@@ -93,6 +94,11 @@ class TokenSubscriberTest extends TestCase
     private $tokenFormatter;
 
     /**
+     * @var ContactFilterMatcher&MockObject
+     */
+    private $contactFilterMatcher;
+
+    /**
      * @var TokenSubscriber
      */
     private $subscriber;
@@ -126,6 +132,7 @@ class TokenSubscriberTest extends TestCase
         $this->eventModel           = $this->createMock(EventModel::class);
         $this->eventDispatcher      = $this->createMock(EventDispatcher::class);
         $this->tokenFormatter       = $this->createMock(TokenFormatter::class);
+        $this->contactFilterMatcher = $this->createMock(ContactFilterMatcher::class);
         $this->subscriber           = new TokenSubscriber(
             $this->configProvider,
             $this->queryFilterHelper,
@@ -137,7 +144,8 @@ class TokenSubscriberTest extends TestCase
             $this->eventModel,
             $this->eventDispatcher,
             $this->tokenFormatter,
-            15
+            15,
+            $this->contactFilterMatcher
         );
 
         $this->builderEvent                 = $this->createMock(BuilderEvent::class);
@@ -850,6 +858,7 @@ class TokenSubscriberTest extends TestCase
         $this->tokenParser          = new TokenParser();
         $this->eventModel           = $this->createMock(EventModel::class);
         $this->eventDispatcher      = $this->createMock(EventDispatcher::class);
+        $this->contactFilterMatcher = $this->createMock(ContactFilterMatcher::class);
         $this->subscriber           = new TokenSubscriber(
             $this->configProvider,
             $this->queryFilterHelper,
@@ -861,7 +870,8 @@ class TokenSubscriberTest extends TestCase
             $this->eventModel,
             $this->eventDispatcher,
             new TokenFormatter(),
-            15
+            15,
+            $this->contactFilterMatcher
         );
     }
 }

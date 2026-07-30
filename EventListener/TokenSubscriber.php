@@ -56,7 +56,8 @@ class TokenSubscriber implements EventSubscriberInterface
         private EventModel $eventModel,
         private EventDispatcherInterface $eventDispatcher,
         private TokenFormatter $tokenFormatter,
-        private int $leadCustomItemFetchLimit
+        private int $leadCustomItemFetchLimit,
+        private ContactFilterMatcher $contactFilterMatcher
     ) {
     }
 

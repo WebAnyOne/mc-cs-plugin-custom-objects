@@ -411,6 +411,7 @@ $coParams = [
                     'event_dispatcher',
                     'custom_object.helper.token_formatter',
                     '%mautic.custom_item_fetch_limit_per_lead%',
+                    'custom_object.helper.contact_filter_matcher',
                 ],
             ],
         ],
