@@ -85,6 +85,11 @@ class CustomItemExportSchedulerModel extends AbstractCommonModel
         $fileName          = 'custom_items_export_'.$scheduledDateTime->format(self::EXPORT_FILE_NAME_DATE_FORMAT).'.csv';
 
         $filePath    = $this->coreParametersHelper->get('custom_item_export_dir').'/'.$fileName;
+        $exportDir   = \dirname($filePath);
+
+        if (!is_dir($exportDir)) {
+            mkdir($exportDir, 0755, true);
+        }
 
         $this->filePath = $filePath;
 
