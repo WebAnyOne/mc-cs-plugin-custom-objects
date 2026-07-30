@@ -29,6 +29,8 @@ class CustomFieldTypePassTest extends \PHPUnit\Framework\TestCase
                 ['text.type']
             )
             ->willReturnOnConsecutiveCalls(
+                $definition,
+                $definition,
                 $definition
             );
 
