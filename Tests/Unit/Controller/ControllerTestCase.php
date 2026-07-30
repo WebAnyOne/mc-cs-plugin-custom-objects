@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\RouterInterface;
@@ -153,5 +154,24 @@ class ControllerTestCase extends \PHPUnit\Framework\TestCase
         $requestStack->method('getCurrentRequest')->willReturn($request);
 
         $controller->setContainer($this->container);
+    }
+
+    /**
+     * Returns a mock double for the form button field returned by
+     * `$form->get('buttons')->get('save')` (and similar "clicked" checks).
+     *
+     * At runtime, Symfony resolves that field to an instance of
+     * {@see \Symfony\Component\Form\SubmitButton}, which implements both
+     * FormInterface::class (form children are themselves forms) and
+     * ClickableInterface::class (for isClicked()). PHPUnit enforces the
+     * FormInterface::get(): FormInterface return type declaration, so a
+     * mock built from ClickableInterface alone is rejected. Mocking the
+     * concrete SubmitButton class satisfies both interfaces at once.
+     *
+     * @return MockObject|SubmitButton
+     */
+    protected function createClickableFormMock(): MockObject
+    {
+        return $this->createMock(SubmitButton::class);
     }
 }

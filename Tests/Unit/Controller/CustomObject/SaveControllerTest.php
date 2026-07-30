@@ -18,7 +18,6 @@ use MauticPlugin\CustomObjectsBundle\Provider\CustomFieldTypeProvider;
 use MauticPlugin\CustomObjectsBundle\Provider\CustomObjectPermissionProvider;
 use MauticPlugin\CustomObjectsBundle\Provider\CustomObjectRouteProvider;
 use MauticPlugin\CustomObjectsBundle\Tests\Unit\Controller\ControllerTestCase;
-use Symfony\Component\Form\ClickableInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -200,7 +199,7 @@ class SaveControllerTest extends ControllerTestCase
             ->willReturnMap(
                 [
                     ['buttons', $this->form],
-                    ['save', $this->createMock(ClickableInterface::class)],
+                    ['save', $this->createClickableFormMock()],
                 ]
             );
 
@@ -298,7 +297,7 @@ class SaveControllerTest extends ControllerTestCase
             ->method('isValid')
             ->willReturn(true);
 
-        $click = $this->createMock(ClickableInterface::class);
+        $click = $this->createClickableFormMock();
 
         $this->form
             ->method('get')

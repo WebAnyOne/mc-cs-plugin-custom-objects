@@ -19,7 +19,6 @@ use MauticPlugin\CustomObjectsBundle\Provider\CustomItemRouteProvider;
 use MauticPlugin\CustomObjectsBundle\Tests\Unit\Controller\ControllerTestCase;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\MockObject\MockObject;
-use Symfony\Component\Form\ClickableInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -207,7 +206,7 @@ class SaveControllerTest extends ControllerTestCase
             ->with($this->customItem)
             ->willReturn(false);
 
-        $clickable = $this->createMock(ClickableInterface::class);
+        $clickable = $this->createClickableFormMock();
         $this->form
             ->method('get')
             ->willReturnMap(
@@ -343,7 +342,7 @@ class SaveControllerTest extends ControllerTestCase
             ->method('isValid')
             ->willReturn(true);
 
-        $clickable = $this->createMock(ClickableInterface::class);
+        $clickable = $this->createClickableFormMock();
         $this->form
             ->method('get')
             ->willReturnMap(
@@ -631,7 +630,7 @@ class SaveControllerTest extends ControllerTestCase
             ->with($this->customItem)
             ->willReturn(false);
 
-        $clickable = $this->createMock(ClickableInterface::class);
+        $clickable = $this->createClickableFormMock();
 
         $clickable->expects($this->once())
             ->method('isClicked')
